@@ -5,7 +5,8 @@ import CategoryGrid from "@/components/CategoryGrid";
 import ProductCarousel from "@/components/ProductCarousel";
 import ProductGrid from "@/components/ProductGrid";
 import { prisma } from "@/lib/db";
-import { ShieldCheck, BadgeDollarSign, Store, RefreshCw, ArrowRight } from "lucide-react";
+import { ShieldCheck, BadgeDollarSign, Store, RefreshCw, ArrowRight, Sparkles, Flame, Package } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 export const revalidate = 60;
@@ -59,9 +60,14 @@ export default async function Home() {
 
         {/* Categories */}
         <section className="site-container py-6 sm:py-8">
-          <h2 className="font-heading text-base sm:text-lg font-bold text-[#212529] mb-4 sm:mb-5">
-            Categorias
-          </h2>
+          <div className="flex items-center gap-2 mb-4 sm:mb-5">
+            <div className="w-8 h-8 rounded-lg bg-[#FF5733]/10 flex items-center justify-center">
+              <Package size={16} className="text-[#FF5733]" />
+            </div>
+            <h2 className="font-heading text-base sm:text-lg font-bold text-[#212529]">
+              Categorias
+            </h2>
+          </div>
           <CategoryGrid categories={categories} />
         </section>
 
@@ -70,9 +76,22 @@ export default async function Home() {
 
         {/* Featured Products Carousel */}
         <section className="site-container py-6 sm:py-8">
+          <div className="flex items-center justify-between mb-1">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-lg bg-amber-500/10 flex items-center justify-center">
+                <Sparkles size={16} className="text-amber-500" />
+              </div>
+              <span className="font-heading text-base sm:text-lg font-bold text-[#212529]">
+                Destaques da Jeh
+              </span>
+            </div>
+            <Link href="/ofertas" className="text-xs font-semibold text-[#FF5733] hover:text-[#E64D2E] transition-colors flex items-center gap-1">
+              Ver todos <ArrowRight size={12} />
+            </Link>
+          </div>
           <ProductCarousel
             products={featuredProducts}
-            title="Destaques da Jeh"
+            title=""
             viewAllLink="/ofertas"
           />
         </section>
@@ -130,30 +149,53 @@ export default async function Home() {
 
         {/* Recent Products Carousel */}
         <section className="site-container py-6 sm:py-8">
+          <div className="flex items-center justify-between mb-1">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-lg bg-rose-500/10 flex items-center justify-center">
+                <Flame size={16} className="text-rose-500" />
+              </div>
+              <span className="font-heading text-base sm:text-lg font-bold text-[#212529]">
+                Ofertas recentes
+              </span>
+            </div>
+            <Link href="/ofertas" className="text-xs font-semibold text-[#FF5733] hover:text-[#E64D2E] transition-colors flex items-center gap-1">
+              Ver todos <ArrowRight size={12} />
+            </Link>
+          </div>
           <ProductCarousel
             products={recentProducts}
-            title="Ofertas recentes"
+            title=""
             viewAllLink="/ofertas"
           />
         </section>
 
         {/* CTA Section */}
         <section className="site-container py-4 sm:py-6">
-          <div className="bg-[#212529] rounded-2xl p-8 sm:p-12 text-center sm:text-left">
-            <div className="max-w-xl mx-auto sm:mx-0">
-              <h2 className="font-heading text-xl sm:text-2xl font-bold text-white mb-2">
-                Não perca nenhuma oferta
-              </h2>
-              <p className="text-gray-400 text-sm mb-6">
-                Siga nosso Instagram e fique por dentro de todas as promoções e achados exclusivos.
-              </p>
-              <a
-                href="#"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-[#FF5733] text-white rounded-lg font-heading font-semibold text-sm hover:bg-[#E64D2E] transition-colors"
-              >
-                Seguir no Instagram
-                <ArrowRight size={14} />
-              </a>
+          <div className="relative rounded-2xl overflow-hidden">
+            <Image
+              src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1200&h=500&fit=crop&q=80"
+              alt="Ofertas exclusivas"
+              fill
+              className="object-cover"
+              sizes="(max-width: 1024px) 100vw, 1200px"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#212529]/90 via-[#212529]/70 to-[#212529]/40" />
+            <div className="relative p-8 sm:p-12 text-center sm:text-left">
+              <div className="max-w-xl mx-auto sm:mx-0">
+                <h2 className="font-heading text-xl sm:text-2xl font-bold text-white mb-2 drop-shadow-md">
+                  Não perca nenhuma oferta
+                </h2>
+                <p className="text-gray-300 text-sm mb-6">
+                  Siga nosso Instagram e fique por dentro de todas as promoções e achados exclusivos.
+                </p>
+                <a
+                  href="#"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-[#FF5733] text-white rounded-lg font-heading font-semibold text-sm hover:bg-[#E64D2E] transition-colors shadow-lg"
+                >
+                  Seguir no Instagram
+                  <ArrowRight size={14} />
+                </a>
+              </div>
             </div>
           </div>
         </section>

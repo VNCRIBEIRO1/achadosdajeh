@@ -6,7 +6,7 @@ import { formatPrice, getPlatformInfo } from "@/lib/utils";
 import { ExternalLink, TrendingDown } from "lucide-react";
 
 const PLACEHOLDER =
-  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' fill='%23f8f9fa'%3E%3Crect width='400' height='400'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='14' fill='%23adb5bd'%3ESem imagem%3C/text%3E%3C/svg%3E";
+  "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=400&fit=crop&q=80";
 
 interface ProductCardProps {
   product: {

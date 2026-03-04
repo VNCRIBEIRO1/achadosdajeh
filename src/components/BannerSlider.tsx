@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 interface BannerSliderProps {
@@ -19,7 +20,8 @@ const defaultSlides = [
     id: "promo-1",
     title: "Ofertas selecionadas com até 70% off",
     subtitle: "Produtos incríveis das melhores lojas do Brasil",
-    gradient: "from-[#FF5733] to-[#FF8C33]",
+    image: "https://images.unsplash.com/photo-1607082349566-187342175e2f?w=1400&h=600&fit=crop&q=80",
+    gradient: "from-black/60 via-black/40 to-transparent",
     link: "/ofertas",
     cta: "Explorar ofertas",
   },
@@ -27,7 +29,8 @@ const defaultSlides = [
     id: "promo-2",
     title: "Moda com os melhores preços",
     subtitle: "Roupas, calçados e acessórios com curadoria especial",
-    gradient: "from-[#212529] to-[#495057]",
+    image: "https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=1400&h=600&fit=crop&q=80",
+    gradient: "from-black/60 via-black/40 to-transparent",
     link: "/categoria/moda",
     cta: "Ver coleção",
   },
@@ -35,7 +38,8 @@ const defaultSlides = [
     id: "promo-3",
     title: "Eletrônicos e gadgets",
     subtitle: "Smartphones, fones e acessórios com preço baixo",
-    gradient: "from-[#1E3A5F] to-[#2D5F8B]",
+    image: "https://images.unsplash.com/photo-1468495244123-6c6c332eeece?w=1400&h=600&fit=crop&q=80",
+    gradient: "from-black/60 via-black/40 to-transparent",
     link: "/categoria/eletronicos",
     cta: "Conferir",
   },
@@ -71,20 +75,29 @@ export default function BannerSlider({ banners }: BannerSliderProps) {
                 index === current ? "opacity-100" : "opacity-0 pointer-events-none"
               }`}
             >
-              <div className={`w-full h-full bg-gradient-to-br ${slide.gradient} flex items-center`}>
+              <div className="w-full h-full relative flex items-center">
+                <Image
+                  src={slide.image}
+                  alt={slide.title}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 1200px"
+                  priority={index === 0}
+                />
+                <div className={`absolute inset-0 bg-gradient-to-r ${slide.gradient}`} />
                 <div className="relative z-10 site-container">
-                  <p className="text-white/50 text-xs font-semibold uppercase tracking-[0.15em] mb-3">
+                  <p className="text-white/60 text-xs font-semibold uppercase tracking-[0.15em] mb-3">
                     Achados da Jeh
                   </p>
-                  <h2 className="font-heading text-white text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 leading-tight max-w-lg">
+                  <h2 className="font-heading text-white text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 leading-tight max-w-lg drop-shadow-md">
                     {slide.title}
                   </h2>
-                  <p className="text-white/70 text-sm sm:text-base mb-6 max-w-md font-light">
+                  <p className="text-white/80 text-sm sm:text-base mb-6 max-w-md font-light drop-shadow-sm">
                     {slide.subtitle}
                   </p>
                   <Link
                     href={slide.link}
-                    className="inline-flex items-center gap-2 px-6 py-3 bg-white text-[#212529] rounded-lg font-heading font-semibold text-sm hover:bg-gray-100 transition-colors"
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-white text-[#212529] rounded-lg font-heading font-semibold text-sm hover:bg-gray-100 transition-colors shadow-lg"
                   >
                     {slide.cta}
                     <ArrowRight size={14} />
@@ -138,24 +151,29 @@ export default function BannerSlider({ banners }: BannerSliderProps) {
             index === current ? "opacity-100" : "opacity-0 pointer-events-none"
           }`}
         >
-          <div
-            className="w-full h-full bg-cover bg-center flex items-center"
-            style={{ backgroundImage: `url(${banner.image})` }}
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent" />
+          <div className="w-full h-full relative flex items-center">
+            <Image
+              src={banner.image}
+              alt={banner.title}
+              fill
+              className="object-cover"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 1200px"
+              priority={index === 0}
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-transparent" />
             <div className="relative z-10 site-container">
-              <h2 className="font-heading text-white text-2xl sm:text-3xl lg:text-4xl font-bold mb-2 max-w-lg">
+              <h2 className="font-heading text-white text-2xl sm:text-3xl lg:text-4xl font-bold mb-2 max-w-lg drop-shadow-md">
                 {banner.title}
               </h2>
               {banner.subtitle && (
-                <p className="text-white/80 text-sm sm:text-base max-w-md font-light">
+                <p className="text-white/80 text-sm sm:text-base max-w-md font-light drop-shadow-sm">
                   {banner.subtitle}
                 </p>
               )}
               {banner.link && (
                 <a
                   href={banner.link}
-                  className="inline-flex items-center gap-2 mt-5 px-6 py-3 bg-[#FF5733] text-white rounded-lg font-heading font-semibold text-sm hover:bg-[#E64D2E] transition-colors"
+                  className="inline-flex items-center gap-2 mt-5 px-6 py-3 bg-[#FF5733] text-white rounded-lg font-heading font-semibold text-sm hover:bg-[#E64D2E] transition-colors shadow-lg"
                 >
                   Ver ofertas
                   <ArrowRight size={14} />
