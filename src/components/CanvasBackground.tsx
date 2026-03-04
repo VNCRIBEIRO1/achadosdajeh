@@ -13,79 +13,107 @@ export default function CanvasBackground() {
     if (!ctx) return;
 
     let animationId: number;
-    let particles: {
+
+    interface Blob {
       x: number;
       y: number;
-      size: number;
-      speedX: number;
-      speedY: number;
+      radius: number;
+      vx: number;
+      vy: number;
+      color: [number, number, number];
       opacity: number;
-      color: string;
-    }[] = [];
+    }
 
-    const colors = [
-      "rgba(249, 115, 22, 0.08)", // orange
-      "rgba(236, 72, 153, 0.06)", // pink
-      "rgba(139, 92, 246, 0.05)", // purple
-      "rgba(249, 115, 22, 0.04)", // light orange
+    const blobs: Blob[] = [];
+
+    const brandColors: [number, number, number][] = [
+      [249, 115, 22],   // orange
+      [236, 72, 153],   // pink
+      [139, 92, 246],   // purple
+      [251, 146, 60],   // light orange
+      [244, 114, 182],  // light pink
     ];
 
     const resize = () => {
       canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      canvas.height = document.documentElement.scrollHeight;
     };
 
-    const createParticles = () => {
-      particles = [];
-      const count = Math.floor((canvas.width * canvas.height) / 25000);
-      for (let i = 0; i < Math.min(count, 40); i++) {
-        particles.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          size: Math.random() * 120 + 40,
-          speedX: (Math.random() - 0.5) * 0.3,
-          speedY: (Math.random() - 0.5) * 0.2,
-          opacity: Math.random() * 0.5 + 0.3,
-          color: colors[Math.floor(Math.random() * colors.length)],
+    const createBlobs = () => {
+      blobs.length = 0;
+      const w = canvas.width;
+      const h = canvas.height;
+
+      // Create large decorative blobs distributed across the page
+      const positions = [
+        { x: w * 0.1, y: h * 0.05 },
+        { x: w * 0.85, y: h * 0.08 },
+        { x: w * 0.15, y: h * 0.25 },
+        { x: w * 0.9, y: h * 0.3 },
+        { x: w * 0.05, y: h * 0.5 },
+        { x: w * 0.8, y: h * 0.55 },
+        { x: w * 0.2, y: h * 0.75 },
+        { x: w * 0.92, y: h * 0.8 },
+      ];
+
+      positions.forEach((pos, i) => {
+        blobs.push({
+          x: pos.x,
+          y: pos.y,
+          radius: Math.random() * 200 + 150,
+          vx: (Math.random() - 0.5) * 0.15,
+          vy: (Math.random() - 0.5) * 0.1,
+          color: brandColors[i % brandColors.length],
+          opacity: 0.03 + Math.random() * 0.025,
         });
-      }
+      });
     };
 
+    const drawBlob = (blob: Blob) => {
+      const gradient = ctx.createRadialGradient(
+        blob.x, blob.y, 0,
+        blob.x, blob.y, blob.radius
+      );
+      gradient.addColorStop(0, `rgba(${blob.color[0]}, ${blob.color[1]}, ${blob.color[2]}, ${blob.opacity})`);
+      gradient.addColorStop(0.5, `rgba(${blob.color[0]}, ${blob.color[1]}, ${blob.color[2]}, ${blob.opacity * 0.5})`);
+      gradient.addColorStop(1, `rgba(${blob.color[0]}, ${blob.color[1]}, ${blob.color[2]}, 0)`);
+
+      ctx.beginPath();
+      ctx.fillStyle = gradient;
+      ctx.arc(blob.x, blob.y, blob.radius, 0, Math.PI * 2);
+      ctx.fill();
+    };
+
+    let tick = 0;
     const animate = () => {
+      tick++;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      particles.forEach((p) => {
-        p.x += p.speedX;
-        p.y += p.speedY;
+      blobs.forEach((blob, i) => {
+        // Gentle floating motion with sine wave
+        blob.x += Math.sin(tick * 0.005 + i) * 0.3;
+        blob.y += Math.cos(tick * 0.004 + i * 0.7) * 0.2;
 
-        if (p.x < -p.size) p.x = canvas.width + p.size;
-        if (p.x > canvas.width + p.size) p.x = -p.size;
-        if (p.y < -p.size) p.y = canvas.height + p.size;
-        if (p.y > canvas.height + p.size) p.y = -p.size;
-
-        ctx.beginPath();
-        const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size);
-        gradient.addColorStop(0, p.color);
-        gradient.addColorStop(1, "transparent");
-        ctx.fillStyle = gradient;
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fill();
+        drawBlob(blob);
       });
 
       animationId = requestAnimationFrame(animate);
     };
 
     resize();
-    createParticles();
+    createBlobs();
     animate();
 
-    window.addEventListener("resize", () => {
+    const handleResize = () => {
       resize();
-      createParticles();
-    });
+      createBlobs();
+    };
+
+    window.addEventListener("resize", handleResize);
 
     return () => {
       cancelAnimationFrame(animationId);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 

@@ -50,7 +50,7 @@ export default async function SearchPage({ searchParams }: Props) {
   return (
     <>
       <Header />
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+      <main className="site-container py-6 sm:py-8">
         <nav className="flex items-center gap-1.5 text-sm text-gray-400 mb-6">
           <a href="/" className="hover:text-orange-500 transition-colors">Início</a>
           <ChevronRight size={14} />

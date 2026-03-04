@@ -18,7 +18,7 @@ export default function Footer() {
           <div className="absolute -top-24 -right-24 w-96 h-96 bg-white rounded-full" />
           <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-white rounded-full" />
         </div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
+        <div className="relative site-container py-10 sm:py-14">
           <div className="max-w-2xl mx-auto text-center">
             <h3 className="text-white text-xl sm:text-2xl font-bold mb-2">
               Receba as melhores ofertas!
@@ -46,7 +46,7 @@ export default function Footer() {
 
       {/* Main footer */}
       <div className="bg-gray-900 text-gray-300">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
+        <div className="site-container py-12 sm:py-16">
           <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
             {/* Brand */}
             <div className="col-span-2 sm:col-span-1">
@@ -137,7 +137,7 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="border-t border-gray-800">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 py-5">
+          <div className="site-container py-5">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
               <div className="flex items-center gap-2 text-xs text-gray-500">
                 <span>© 2026 Achados da Jeh</span>

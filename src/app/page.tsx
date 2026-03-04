@@ -46,13 +46,13 @@ export default async function Home() {
     <>
       <Header />
       <main>
-        {/* Hero Banner — full width */}
-        <section className="px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 max-w-7xl mx-auto">
+        {/* Hero Banner */}
+        <section className="site-container pt-4 sm:pt-6">
           <BannerSlider banners={banners} />
         </section>
 
-        {/* Categories — horizontal scroll on mobile */}
-        <section className="mt-8 sm:mt-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        {/* Categories */}
+        <section className="mt-8 sm:mt-10 site-container">
           <div className="flex items-center justify-between mb-5">
             <h2 className="text-lg sm:text-xl font-bold text-gray-900 section-title">
               Navegue por categorias
@@ -68,7 +68,7 @@ export default async function Home() {
         </section>
 
         {/* Featured Products */}
-        <section className="mt-10 sm:mt-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <section className="mt-10 sm:mt-14 site-container">
           <ProductGrid
             products={featuredProducts}
             title="Destaques da Jeh"
@@ -79,7 +79,7 @@ export default async function Home() {
         </section>
 
         {/* CTA Banner */}
-        <section className="mt-10 sm:mt-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <section className="mt-10 sm:mt-14 site-container">
           <div className="relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-3xl p-8 sm:p-12 lg:p-16">
             {/* Decorative elements */}
             <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-orange-500/20 to-transparent rounded-full blur-3xl" />
@@ -115,7 +115,7 @@ export default async function Home() {
         </section>
 
         {/* Recent Products */}
-        <section className="mt-10 sm:mt-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <section className="mt-10 sm:mt-14 site-container">
           <ProductGrid
             products={recentProducts}
             title="Acabou de Chegar"
@@ -126,7 +126,7 @@ export default async function Home() {
         </section>
 
         {/* Trust Section */}
-        <section className="mt-10 sm:mt-14 mb-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <section className="mt-10 sm:mt-14 mb-10 site-container">
           <div className="bg-white rounded-3xl border border-gray-100 p-6 sm:p-10">
             <h2 className="text-center text-lg sm:text-xl font-bold text-gray-900 mb-8">
               Por que escolher a Achados da Jeh?

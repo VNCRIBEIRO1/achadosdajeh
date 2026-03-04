@@ -48,7 +48,7 @@ export default function Header() {
       >
         {/* Announcement bar */}
         <div className="bg-gray-900 text-white overflow-hidden">
-          <div className="max-w-7xl mx-auto px-4 py-1.5 flex items-center justify-center gap-2 text-xs sm:text-sm">
+          <div className="site-container py-1.5 flex items-center justify-center gap-2 text-xs sm:text-sm">
             <Flame size={14} className="text-orange-400 shrink-0" />
             <span className="font-medium truncate">
               Frete grátis acima de R$79 em produtos selecionados
@@ -62,7 +62,7 @@ export default function Header() {
 
         {/* Main header */}
         <div className="bg-gradient-to-r from-orange-500 to-orange-600">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center gap-3 sm:gap-5">
+          <div className="site-container py-3 flex items-center gap-3 sm:gap-5">
             {/* Mobile menu */}
             <button
               onClick={() => setMenuOpen(!menuOpen)}
@@ -128,7 +128,7 @@ export default function Header() {
 
         {/* Category navigation — desktop */}
         <nav className="hidden lg:block bg-white border-b border-gray-100">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="site-container">
             <ul className="flex items-center gap-0.5 -mb-px">
               <li>
                 <Link
