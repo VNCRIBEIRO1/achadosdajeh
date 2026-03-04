@@ -1,0 +1,81 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      String   @default("admin")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Category {
+  id        String    @id @default(cuid())
+  name      String    @unique
+  slug      String    @unique
+  icon      String?
+  image     String?
+  order     Int       @default(0)
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Product {
+  id            String   @id @default(cuid())
+  title         String
+  slug          String   @unique
+  description   String
+  image         String
+  images        String[] @default([])
+  price         Float
+  originalPrice Float?
+  discount      Int?
+  platform      String
+  affiliateLink String
+  categoryId    String
+  category      Category @relation(fields: [categoryId], references: [id])
+  featured      Boolean  @default(false)
+  active        Boolean  @default(true)
+  clicks        Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([categoryId])
+  @@index([platform])
+  @@index([featured])
+  @@index([active])
+}
+
+model Banner {
+  id        String   @id @default(cuid())
+  title     String
+  subtitle  String?
+  image     String
+  link      String?
+  active    Boolean  @default(true)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SiteConfig {
+  id              String @id @default("main")
+  siteName        String @default("Achados da Jeh")
+  siteDescription String @default("Os melhores achados da internet com os melhores preços!")
+  instagram       String @default("")
+  whatsapp        String @default("")
+  email           String @default("")
+  logoUrl         String @default("")
+  primaryColor    String @default("#F97316")
+  secondaryColor  String @default("#EC4899")
+}
