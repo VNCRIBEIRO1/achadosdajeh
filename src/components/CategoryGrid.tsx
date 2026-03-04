@@ -1,7 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { Smartphone, ShirtIcon, Home, Sparkles, Dumbbell, ToyBrick, BookOpen, Gamepad2, Car, PawPrint, Pill, Apple, Package, ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  Smartphone, ShirtIcon, Home, Sparkles, Dumbbell, ToyBrick,
+  BookOpen, Gamepad2, Car, PawPrint, Pill, Apple, Package,
+  ChevronLeft, ChevronRight,
+} from "lucide-react";
 import { useRef } from "react";
 
 interface CategoryGridProps {
@@ -30,16 +34,16 @@ const categoryIcons: Record<string, React.ElementType> = {
 };
 
 const categoryColors: Record<string, string> = {
-  eletronicos: "bg-blue-500",
-  moda: "bg-pink-500",
-  casa: "bg-amber-500",
-  beleza: "bg-purple-500",
-  esportes: "bg-green-500",
-  brinquedos: "bg-red-500",
-  livros: "bg-indigo-500",
-  games: "bg-cyan-500",
-  automotivo: "bg-slate-500",
-  pets: "bg-teal-500",
+  eletronicos: "#3B82F6",
+  moda: "#EC4899",
+  casa: "#F59E0B",
+  beleza: "#A855F7",
+  esportes: "#22C55E",
+  brinquedos: "#EF4444",
+  livros: "#6366F1",
+  games: "#06B6D4",
+  automotivo: "#64748B",
+  pets: "#14B8A6",
 };
 
 export default function CategoryGrid({ categories }: CategoryGridProps) {
@@ -64,36 +68,37 @@ export default function CategoryGrid({ categories }: CategoryGridProps) {
     <div className="relative group/cat">
       <button
         onClick={() => scroll("left")}
-        className="absolute -left-2 top-1/2 -translate-y-1/2 z-10 bg-white shadow border border-gray-200 p-1 opacity-0 group-hover/cat:opacity-100 transition-opacity hidden sm:flex"
+        className="absolute -left-2 top-1/2 -translate-y-1/2 z-10 bg-white shadow-md border border-gray-100 p-1.5 rounded-full opacity-0 group-hover/cat:opacity-100 transition-opacity hidden sm:flex"
       >
         <ChevronLeft size={14} className="text-gray-500" />
       </button>
       <button
         onClick={() => scroll("right")}
-        className="absolute -right-2 top-1/2 -translate-y-1/2 z-10 bg-white shadow border border-gray-200 p-1 opacity-0 group-hover/cat:opacity-100 transition-opacity hidden sm:flex"
+        className="absolute -right-2 top-1/2 -translate-y-1/2 z-10 bg-white shadow-md border border-gray-100 p-1.5 rounded-full opacity-0 group-hover/cat:opacity-100 transition-opacity hidden sm:flex"
       >
         <ChevronRight size={14} className="text-gray-500" />
       </button>
 
       <div
         ref={scrollRef}
-        className="flex gap-3 sm:gap-4 overflow-x-auto no-scrollbar py-1 sm:justify-center"
+        className="flex gap-4 sm:gap-5 overflow-x-auto no-scrollbar py-1 sm:justify-center"
       >
         {displayCategories.map((cat) => {
           const IconComponent = categoryIcons[cat.slug] || Package;
-          const bgColor = categoryColors[cat.slug] || "bg-gray-500";
+          const color = categoryColors[cat.slug] || "#6C757D";
           return (
             <Link
               key={cat.id}
               href={`/categoria/${cat.slug}`}
-              className="group shrink-0 flex flex-col items-center gap-1.5 w-[64px] sm:w-[72px]"
+              className="group shrink-0 flex flex-col items-center gap-2 w-[68px] sm:w-[76px]"
             >
               <div
-                className={`w-12 h-12 sm:w-14 sm:h-14 ${bgColor} flex items-center justify-center transition-transform group-hover:scale-110`}
+                className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center transition-all group-hover:scale-110 group-hover:shadow-md"
+                style={{ backgroundColor: `${color}12`, color }}
               >
-                <IconComponent className="text-white" size={20} />
+                <IconComponent size={22} />
               </div>
-              <span className="text-[10px] sm:text-[11px] font-semibold text-gray-600 group-hover:text-gray-900 text-center leading-tight transition-colors">
+              <span className="text-[10px] sm:text-[11px] font-semibold text-gray-600 group-hover:text-[#212529] text-center leading-tight transition-colors">
                 {cat.name}
               </span>
             </Link>

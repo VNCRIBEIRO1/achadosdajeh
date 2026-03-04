@@ -52,27 +52,31 @@ export default async function SearchPage({ searchParams }: Props) {
   return (
     <>
       <Header />
-      <main className="site-container py-6 sm:py-8">
-        <nav className="flex items-center gap-1.5 text-xs text-gray-400 mb-5">
-          <a href="/" className="hover:text-orange-500 transition-colors">
-            Início
-          </a>
-          <ChevronRight size={12} />
-          <span className="text-gray-700 font-medium">Busca</span>
-        </nav>
+      <main>
+        <div className="bg-white border-b border-gray-100">
+          <div className="site-container py-6 sm:py-8">
+            <nav className="flex items-center gap-1.5 text-xs text-gray-400 mb-4">
+              <a href="/" className="hover:text-[#FF5733] transition-colors">
+                Início
+              </a>
+              <ChevronRight size={12} />
+              <span className="text-[#212529] font-medium">Busca</span>
+            </nav>
 
-        <div className="mb-6">
-          <h1 className="text-lg sm:text-2xl font-black text-gray-900 mb-1">
-            {q ? `Resultados para "${q}"` : "Buscar Produtos"}
-          </h1>
-          {q && (
-            <p className="text-gray-400 text-xs">
-              {products.length} resultado(s) encontrado(s)
-            </p>
-          )}
+            <h1 className="font-heading text-xl sm:text-2xl font-bold text-[#212529] mb-1">
+              {q ? `Resultados para "${q}"` : "Buscar Produtos"}
+            </h1>
+            {q && (
+              <p className="text-gray-500 text-sm">
+                {products.length} resultado(s) encontrado(s)
+              </p>
+            )}
+          </div>
         </div>
 
-        <ProductGrid products={products} />
+        <div className="site-container py-6 sm:py-8">
+          <ProductGrid products={products} />
+        </div>
       </main>
       <Footer />
     </>

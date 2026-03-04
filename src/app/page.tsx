@@ -5,7 +5,7 @@ import CategoryGrid from "@/components/CategoryGrid";
 import ProductCarousel from "@/components/ProductCarousel";
 import ProductGrid from "@/components/ProductGrid";
 import { prisma } from "@/lib/db";
-import { ShieldCheck, BadgeDollarSign, Store, RefreshCw, ArrowRight, Zap, Users, Lock } from "lucide-react";
+import { ShieldCheck, BadgeDollarSign, Store, RefreshCw, ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 export const revalidate = 60;
@@ -52,87 +52,73 @@ export default async function Home() {
     <>
       <Header />
       <main>
-        {/* Hero Banner — full width, edge-to-edge */}
-        <BannerSlider banners={banners} />
+        {/* Hero Banner */}
+        <section className="site-container pt-5 sm:pt-6">
+          <BannerSlider banners={banners} />
+        </section>
 
         {/* Categories */}
-        <section className="site-container py-5 sm:py-6">
+        <section className="site-container py-6 sm:py-8">
+          <h2 className="font-heading text-base sm:text-lg font-bold text-[#212529] mb-4 sm:mb-5">
+            Categorias
+          </h2>
           <CategoryGrid categories={categories} />
         </section>
 
-        {/* Destaques — full-width carousel card */}
-        <section className="site-container mb-3 sm:mb-4">
+        {/* Divider */}
+        <div className="site-container"><hr className="separator" /></div>
+
+        {/* Featured Products Carousel */}
+        <section className="site-container py-6 sm:py-8">
           <ProductCarousel
             products={featuredProducts}
             title="Destaques da Jeh"
-            titleColor="bg-orange-500"
-            borderColor="border-orange-200"
             viewAllLink="/ofertas"
           />
         </section>
 
-        {/* Urgency strip */}
-        <div className="bg-red-600 py-2">
-          <div className="site-container flex items-center justify-center gap-2 text-white text-[11px] sm:text-xs font-bold">
-            <Zap size={13} className="animate-pulse-urgent" />
-            <span className="uppercase tracking-wide">
-              Preços podem mudar a qualquer momento
-            </span>
-            <span className="text-red-300 hidden sm:inline">|</span>
-            <span className="hidden sm:inline text-red-200 font-normal">
-              Aproveite enquanto dura
-            </span>
-          </div>
-        </div>
-
-        {/* Ofertas — full-width carousel card */}
-        <section className="site-container mt-3 sm:mt-4 mb-3 sm:mb-4">
-          <ProductCarousel
-            products={recentProducts}
-            title="Ofertas que você vai amar"
-            titleColor="bg-gray-900"
-            borderColor="border-gray-300"
-            viewAllLink="/ofertas"
-          />
-        </section>
-
-        {/* Trust strip */}
-        <section className="bg-gray-50 border-y border-gray-200 py-5 sm:py-6">
+        {/* Trust badges */}
+        <section className="bg-white py-8 sm:py-10">
           <div className="site-container">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
               {[
                 {
                   Icon: ShieldCheck,
-                  title: "Links Verificados",
+                  title: "Links verificados",
                   desc: "Redirecionamos para lojas oficiais",
-                  color: "text-green-600",
+                  color: "#198754",
                 },
                 {
                   Icon: BadgeDollarSign,
-                  title: "Menores Preços",
+                  title: "Menores preços",
                   desc: "Curadoria dos melhores valores",
-                  color: "text-orange-500",
+                  color: "#FF5733",
                 },
                 {
                   Icon: Store,
-                  title: "Lojas Confiáveis",
+                  title: "Lojas confiáveis",
                   desc: "Shopee, Magalu e Mercado Livre",
-                  color: "text-blue-600",
+                  color: "#3B82F6",
                 },
                 {
                   Icon: RefreshCw,
-                  title: "Atualizado Diário",
+                  title: "Atualização diária",
                   desc: "Novos achados todos os dias",
-                  color: "text-purple-600",
+                  color: "#A855F7",
                 },
               ].map((badge) => (
                 <div key={badge.title} className="flex items-start gap-3">
-                  <badge.Icon className={`${badge.color} shrink-0 mt-0.5`} size={20} />
+                  <div
+                    className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
+                    style={{ backgroundColor: `${badge.color}12`, color: badge.color }}
+                  >
+                    <badge.Icon size={20} />
+                  </div>
                   <div>
-                    <h3 className="font-bold text-gray-900 text-xs sm:text-sm">
+                    <h3 className="font-heading font-semibold text-[#212529] text-sm">
                       {badge.title}
                     </h3>
-                    <p className="text-[10px] sm:text-[11px] text-gray-500 mt-0.5">
+                    <p className="text-xs text-gray-500 mt-0.5">
                       {badge.desc}
                     </p>
                   </div>
@@ -142,45 +128,32 @@ export default async function Home() {
           </div>
         </section>
 
-        {/* CTA Banner */}
-        <section className="bg-gray-900">
-          <div className="site-container py-10 sm:py-14">
-            <div className="flex flex-col sm:flex-row items-center gap-6 sm:gap-10">
-              <div className="flex-1 text-center sm:text-left">
-                <div className="inline-flex items-center gap-1.5 bg-orange-500/20 text-orange-400 text-[10px] font-bold px-2.5 py-1 mb-3 uppercase tracking-wider">
-                  <Zap size={10} />
-                  Atualizações diárias
-                </div>
-                <h2 className="text-xl sm:text-2xl lg:text-3xl font-black text-white mb-2 leading-tight">
-                  Não perca nenhuma oferta
-                </h2>
-                <p className="text-gray-500 text-sm mb-5 max-w-md">
-                  Siga nosso Instagram e fique por dentro de todas as
-                  promoções e achados exclusivos
-                </p>
-                <a
-                  href="#"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-orange-500 text-white font-bold text-sm hover:bg-orange-600 transition-colors"
-                >
-                  Seguir no Instagram
-                  <ArrowRight size={14} />
-                </a>
-              </div>
-              <div className="hidden md:flex flex-col items-center gap-2">
-                <div className="flex -space-x-2">
-                  {[1, 2, 3, 4, 5].map((i) => (
-                    <div
-                      key={i}
-                      className="w-8 h-8 bg-gray-700 border-2 border-gray-900 flex items-center justify-center"
-                    >
-                      <Users size={12} className="text-gray-500" />
-                    </div>
-                  ))}
-                </div>
-                <p className="text-gray-500 text-xs">
-                  <span className="text-white font-bold">2.500+</span> pessoas já seguem
-                </p>
-              </div>
+        {/* Recent Products Carousel */}
+        <section className="site-container py-6 sm:py-8">
+          <ProductCarousel
+            products={recentProducts}
+            title="Ofertas recentes"
+            viewAllLink="/ofertas"
+          />
+        </section>
+
+        {/* CTA Section */}
+        <section className="site-container py-4 sm:py-6">
+          <div className="bg-[#212529] rounded-2xl p-8 sm:p-12 text-center sm:text-left">
+            <div className="max-w-xl mx-auto sm:mx-0">
+              <h2 className="font-heading text-xl sm:text-2xl font-bold text-white mb-2">
+                Não perca nenhuma oferta
+              </h2>
+              <p className="text-gray-400 text-sm mb-6">
+                Siga nosso Instagram e fique por dentro de todas as promoções e achados exclusivos.
+              </p>
+              <a
+                href="#"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-[#FF5733] text-white rounded-lg font-heading font-semibold text-sm hover:bg-[#E64D2E] transition-colors"
+              >
+                Seguir no Instagram
+                <ArrowRight size={14} />
+              </a>
             </div>
           </div>
         </section>
@@ -189,29 +162,11 @@ export default async function Home() {
         <section className="site-container py-6 sm:py-8">
           <ProductGrid
             products={recentProducts}
-            title="Todos os Achados"
+            title="Todos os achados"
             subtitle="Explore todos os produtos disponíveis"
             showViewAll
             viewAllLink="/ofertas"
           />
-        </section>
-
-        {/* Security footer strip */}
-        <section className="border-t border-gray-200 bg-white py-4">
-          <div className="site-container flex flex-wrap items-center justify-center gap-4 sm:gap-8 text-[10px] sm:text-xs text-gray-400">
-            <span className="flex items-center gap-1">
-              <Lock size={11} className="text-green-500" />
-              Conexão segura
-            </span>
-            <span className="flex items-center gap-1">
-              <ShieldCheck size={11} className="text-green-500" />
-              Links verificados
-            </span>
-            <span className="flex items-center gap-1">
-              <Store size={11} className="text-blue-500" />
-              Lojas oficiais
-            </span>
-          </div>
         </section>
       </main>
       <Footer />

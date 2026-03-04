@@ -4,10 +4,10 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { formatPrice, getPlatformInfo } from "@/lib/utils";
-import { ChevronLeft, ChevronRight, ExternalLink, ShoppingBag, TrendingDown, Clock } from "lucide-react";
+import { ChevronLeft, ChevronRight, ExternalLink, TrendingDown, ArrowRight } from "lucide-react";
 
 const PLACEHOLDER =
-  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' fill='%23f5f5f5'%3E%3Crect width='400' height='400'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='14' fill='%239ca3af'%3ESem imagem%3C/text%3E%3C/svg%3E";
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' fill='%23f8f9fa'%3E%3Crect width='400' height='400'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='14' fill='%23adb5bd'%3ESem imagem%3C/text%3E%3C/svg%3E";
 
 interface Product {
   id: string;
@@ -24,8 +24,6 @@ interface Product {
 interface ProductCarouselProps {
   products: Product[];
   title: string;
-  titleColor?: string;
-  borderColor?: string;
   viewAllLink?: string;
 }
 
@@ -40,49 +38,42 @@ function CarouselCard({ product }: { product: Product }) {
         )
       : 0);
 
-  const hash = product.id.split("").reduce((a, c) => a + c.charCodeAt(0), 0);
-  const soldCount = (hash % 300) + 50;
-
   return (
-    <div className="shrink-0 w-[150px] sm:w-[175px] lg:w-[195px] bg-white border border-gray-100 overflow-hidden group hover:border-gray-300 transition-colors flex flex-col">
+    <div className="shrink-0 w-[160px] sm:w-[185px] lg:w-[200px] bg-white rounded-xl border border-gray-100 overflow-hidden group card-hover flex flex-col">
       {/* Image */}
       <Link
         href={`/produto/${product.slug}`}
-        className="relative block aspect-square overflow-hidden bg-white"
+        className="relative block aspect-square overflow-hidden bg-gray-50"
       >
         <Image
           src={product.image || PLACEHOLDER}
           alt={product.title}
           fill
-          className="object-contain p-2.5 group-hover:scale-105 transition-transform duration-300"
-          sizes="195px"
+          className="object-contain p-3 group-hover:scale-105 transition-transform duration-300"
+          sizes="200px"
         />
         {discount > 0 && (
-          <div className="absolute top-0 left-0 bg-red-600 text-white text-[9px] font-black px-1.5 py-0.5 flex items-center gap-0.5">
+          <div className="absolute top-2 left-2 bg-[#DC3545] text-white text-[9px] font-bold px-1.5 py-0.5 rounded-md flex items-center gap-0.5">
             <TrendingDown size={8} />
             -{discount}%
           </div>
         )}
-        <div
-          className="absolute top-0 right-0 text-[7px] font-bold px-1.5 py-0.5 text-white uppercase tracking-wider"
-          style={{ backgroundColor: platformInfo.color }}
-        >
-          {platformInfo.shortName}
-        </div>
       </Link>
 
       {/* Info */}
-      <div className="p-2.5 flex flex-col flex-1 border-t border-gray-50">
+      <div className="p-3 flex flex-col flex-1">
+        <span
+          className="self-start text-[8px] font-semibold px-1.5 py-0.5 rounded text-white mb-1.5"
+          style={{ backgroundColor: platformInfo.color }}
+        >
+          {platformInfo.shortName}
+        </span>
+
         <Link href={`/produto/${product.slug}`}>
-          <h3 className="text-[10px] sm:text-[11px] font-medium text-gray-700 line-clamp-2 hover:text-orange-600 transition-colors leading-snug mb-1.5">
+          <h3 className="font-heading text-[11px] font-semibold text-[#212529] line-clamp-2 hover:text-[#FF5733] transition-colors leading-snug mb-2">
             {product.title}
           </h3>
         </Link>
-
-        <div className="flex items-center gap-1 text-[8px] text-gray-400 mb-1.5">
-          <ShoppingBag size={7} />
-          <span>{soldCount}+ vendidos</span>
-        </div>
 
         <div className="mt-auto">
           {product.originalPrice && product.originalPrice > product.price && (
@@ -90,14 +81,9 @@ function CarouselCard({ product }: { product: Product }) {
               {formatPrice(product.originalPrice)}
             </p>
           )}
-          <p className="text-sm sm:text-base font-black text-gray-900 leading-none">
+          <p className="font-heading text-sm sm:text-base font-bold text-[#212529] leading-none">
             {formatPrice(product.price)}
           </p>
-          {discount > 0 && (
-            <p className="text-[8px] font-bold text-green-700 mt-0.5">
-              Economize {formatPrice((product.originalPrice || product.price) - product.price)}
-            </p>
-          )}
 
           <a
             href={product.affiliateLink}
@@ -106,11 +92,11 @@ function CarouselCard({ product }: { product: Product }) {
             onClick={() => {
               fetch(`/api/products/${product.id}/click`, { method: "POST" });
             }}
-            className="mt-1.5 w-full flex items-center justify-center gap-1 py-1.5 text-white text-[9px] sm:text-[10px] font-bold uppercase tracking-wider transition-all hover:brightness-110"
+            className="mt-2 w-full flex items-center justify-center gap-1 py-2 rounded-lg text-white text-[10px] font-semibold transition-all hover:opacity-90"
             style={{ backgroundColor: platformInfo.color }}
           >
-            <ExternalLink size={9} />
-            Ver na {platformInfo.name}
+            <ExternalLink size={10} />
+            Ver oferta
           </a>
         </div>
       </div>
@@ -121,8 +107,6 @@ function CarouselCard({ product }: { product: Product }) {
 export default function ProductCarousel({
   products,
   title,
-  titleColor = "bg-orange-500",
-  borderColor = "border-gray-200",
   viewAllLink = "/ofertas",
 }: ProductCarouselProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -146,21 +130,17 @@ export default function ProductCarousel({
   if (products.length === 0) return null;
 
   return (
-    <div className={`bg-white border ${borderColor} overflow-hidden`}>
+    <section>
       {/* Header */}
-      <div className={`${titleColor} px-4 py-2.5 flex items-center justify-between`}>
-        <div className="flex items-center gap-2">
-          <h2 className="text-white font-bold text-sm">{title}</h2>
-          <span className="text-white/60 text-[10px] flex items-center gap-0.5">
-            <Clock size={9} />
-            Oferta limitada
-          </span>
-        </div>
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="font-heading text-base sm:text-lg font-bold text-[#212529]">
+          {title}
+        </h2>
         <Link
           href={viewAllLink}
-          className="text-white/70 hover:text-white text-[11px] font-medium transition-colors"
+          className="text-xs font-semibold text-[#FF5733] hover:text-[#E64D2E] transition-colors flex items-center gap-1"
         >
-          Ver todos &rsaquo;
+          Ver todos <ArrowRight size={12} />
         </Link>
       </div>
 
@@ -169,7 +149,7 @@ export default function ProductCarousel({
         {canScrollLeft && (
           <button
             onClick={() => scroll("left")}
-            className="absolute left-1 top-1/2 -translate-y-1/2 z-10 bg-white shadow border border-gray-200 p-1.5 hover:bg-gray-50 transition-all opacity-0 group-hover/carousel:opacity-100"
+            className="absolute -left-2 top-1/2 -translate-y-1/2 z-10 bg-white shadow-md border border-gray-100 p-2 rounded-full hover:bg-gray-50 transition-all opacity-0 group-hover/carousel:opacity-100"
           >
             <ChevronLeft size={16} className="text-gray-600" />
           </button>
@@ -177,7 +157,7 @@ export default function ProductCarousel({
         {canScrollRight && (
           <button
             onClick={() => scroll("right")}
-            className="absolute right-1 top-1/2 -translate-y-1/2 z-10 bg-white shadow border border-gray-200 p-1.5 hover:bg-gray-50 transition-all opacity-0 group-hover/carousel:opacity-100"
+            className="absolute -right-2 top-1/2 -translate-y-1/2 z-10 bg-white shadow-md border border-gray-100 p-2 rounded-full hover:bg-gray-50 transition-all opacity-0 group-hover/carousel:opacity-100"
           >
             <ChevronRight size={16} className="text-gray-600" />
           </button>
@@ -186,13 +166,13 @@ export default function ProductCarousel({
         <div
           ref={scrollRef}
           onScroll={checkScroll}
-          className="flex gap-0 overflow-x-auto no-scrollbar"
+          className="flex gap-3 sm:gap-4 overflow-x-auto no-scrollbar"
         >
           {products.map((product) => (
             <CarouselCard key={product.id} product={product} />
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 }

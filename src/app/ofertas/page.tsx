@@ -2,12 +2,12 @@ import { prisma } from "@/lib/db";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ProductGrid from "@/components/ProductGrid";
-import { Zap, ChevronRight, Clock, ShieldCheck } from "lucide-react";
+import { Tag, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Ofertas do Dia",
+  title: "Ofertas",
   description:
     "Confira as melhores ofertas selecionadas com preços incríveis!",
 };
@@ -28,38 +28,28 @@ export default async function OffersPage() {
       <Header />
       <main>
         {/* Hero */}
-        <div className="bg-orange-500">
+        <div className="bg-white border-b border-gray-100">
           <div className="site-container py-8 sm:py-10">
-            <nav className="flex items-center gap-1.5 text-xs text-orange-200 mb-4">
-              <Link href="/" className="hover:text-white transition-colors">
+            <nav className="flex items-center gap-1.5 text-xs text-gray-400 mb-4">
+              <Link href="/" className="hover:text-[#FF5733] transition-colors">
                 Início
               </Link>
               <ChevronRight size={12} />
-              <span className="text-white font-medium">Ofertas</span>
+              <span className="text-[#212529] font-medium">Ofertas</span>
             </nav>
 
             <div className="flex items-center gap-3 mb-2">
-              <div className="bg-white/15 p-2">
-                <Zap size={22} className="text-white" />
+              <div className="w-10 h-10 bg-[#FFF4F1] rounded-lg flex items-center justify-center">
+                <Tag size={20} className="text-[#FF5733]" />
               </div>
-              <h1 className="text-xl sm:text-3xl font-black text-white">
-                Ofertas do Dia
-              </h1>
-            </div>
-            <p className="text-orange-200 text-sm max-w-md">
-              Produtos selecionados com os melhores preços da internet.
-              Atualizado diariamente!
-            </p>
-
-            <div className="flex items-center gap-4 mt-4 text-[10px] text-orange-200">
-              <span className="flex items-center gap-1">
-                <Clock size={10} />
-                Preços podem mudar
-              </span>
-              <span className="flex items-center gap-1">
-                <ShieldCheck size={10} />
-                {products.length} ofertas ativas
-              </span>
+              <div>
+                <h1 className="font-heading text-xl sm:text-2xl font-bold text-[#212529]">
+                  Ofertas
+                </h1>
+                <p className="text-gray-500 text-sm">
+                  {products.length} produto(s) disponível(is)
+                </p>
+              </div>
             </div>
           </div>
         </div>

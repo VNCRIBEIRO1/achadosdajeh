@@ -3,10 +3,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { formatPrice, getPlatformInfo } from "@/lib/utils";
-import { ExternalLink, TrendingDown, ShoppingBag, Clock } from "lucide-react";
+import { ExternalLink, TrendingDown } from "lucide-react";
 
 const PLACEHOLDER =
-  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' fill='%23f5f5f5'%3E%3Crect width='400' height='400'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='14' fill='%239ca3af'%3ESem imagem%3C/text%3E%3C/svg%3E";
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' fill='%23f8f9fa'%3E%3Crect width='400' height='400'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='14' fill='%23adb5bd'%3ESem imagem%3C/text%3E%3C/svg%3E";
 
 interface ProductCardProps {
   product: {
@@ -34,82 +34,63 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
         )
       : 0);
 
-  // Simulated social proof based on product id hash
-  const hash =
-    product.id.split("").reduce((a, c) => a + c.charCodeAt(0), 0);
-  const soldCount = (hash % 400) + 80;
-
   return (
     <div
-      className="group bg-white border border-gray-200 overflow-hidden card-lift flex flex-col animate-fade-in-up"
+      className="group bg-white rounded-xl border border-gray-100 overflow-hidden card-hover flex flex-col animate-fade-in-up"
       style={{ animationDelay: `${index * 0.04}s` }}
     >
       {/* Image */}
       <Link
         href={`/produto/${product.slug}`}
-        className="relative block aspect-square overflow-hidden bg-white"
+        className="relative block aspect-square overflow-hidden bg-gray-50"
       >
         <Image
           src={product.image || PLACEHOLDER}
           alt={product.title}
           fill
-          className="object-contain p-3 group-hover:scale-105 transition-transform duration-300"
+          className="object-contain p-4 group-hover:scale-105 transition-transform duration-300"
           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
         />
 
-        {/* Discount badge — top left */}
+        {/* Discount badge */}
         {discount > 0 && (
-          <div className="absolute top-0 left-0 bg-red-600 text-white text-[10px] font-black px-2 py-1 flex items-center gap-0.5">
+          <div className="absolute top-2.5 left-2.5 bg-[#DC3545] text-white text-[10px] font-bold px-2 py-0.5 rounded-md flex items-center gap-0.5">
             <TrendingDown size={9} />
             -{discount}%
           </div>
         )}
-
-        {/* Platform — top right */}
-        <div
-          className="absolute top-0 right-0 text-[8px] font-bold px-2 py-1 text-white uppercase tracking-wider"
-          style={{ backgroundColor: platformInfo.color }}
-        >
-          {platformInfo.shortName}
-        </div>
       </Link>
 
       {/* Content */}
-      <div className="p-3 flex flex-col flex-1 border-t border-gray-100">
+      <div className="p-3.5 sm:p-4 flex flex-col flex-1">
+        {/* Platform tag */}
+        <span
+          className="self-start text-[9px] font-semibold px-2 py-0.5 rounded text-white mb-2"
+          style={{ backgroundColor: platformInfo.color }}
+        >
+          {platformInfo.shortName}
+        </span>
+
         <Link href={`/produto/${product.slug}`}>
-          <h3 className="text-[11px] sm:text-[12px] font-medium text-gray-700 line-clamp-2 hover:text-orange-600 transition-colors leading-snug mb-1.5">
+          <h3 className="font-heading text-[12px] sm:text-[13px] font-semibold text-[#212529] line-clamp-2 hover:text-[#FF5733] transition-colors leading-snug mb-3">
             {product.title}
           </h3>
         </Link>
 
-        {/* Social proof */}
-        <div className="flex items-center gap-2 text-[9px] text-gray-400 mb-2">
-          <span className="flex items-center gap-0.5">
-            <ShoppingBag size={8} />
-            {soldCount}+ vendidos
-          </span>
-          <span className="flex items-center gap-0.5 text-orange-500 font-semibold">
-            <Clock size={8} />
-            Oferta limitada
-          </span>
-        </div>
-
         <div className="mt-auto">
-          {/* Price */}
+          {/* Prices */}
           {product.originalPrice && product.originalPrice > product.price && (
-            <p className="text-[10px] text-gray-400 line-through">
+            <p className="text-[11px] text-gray-400 line-through">
               {formatPrice(product.originalPrice)}
             </p>
           )}
-          <p className="text-base sm:text-lg font-black text-gray-900 leading-none">
+          <p className="font-heading text-lg sm:text-xl font-bold text-[#212529] leading-none">
             {formatPrice(product.price)}
           </p>
-          {discount > 0 && (
-            <p className="text-[9px] font-bold text-green-700 mt-0.5">
+          {discount > 0 && product.originalPrice && (
+            <p className="text-[10px] font-semibold text-[#198754] mt-1">
               Economize{" "}
-              {formatPrice(
-                (product.originalPrice || product.price) - product.price
-              )}
+              {formatPrice(product.originalPrice - product.price)}
             </p>
           )}
 
@@ -121,10 +102,10 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
             onClick={() => {
               fetch(`/api/products/${product.id}/click`, { method: "POST" });
             }}
-            className="mt-2 w-full flex items-center justify-center gap-1.5 py-2 text-white text-[10px] sm:text-[11px] font-bold uppercase tracking-wider transition-all hover:brightness-110 active:scale-[0.98]"
+            className="mt-3 w-full flex items-center justify-center gap-1.5 py-2.5 rounded-lg text-white text-xs font-semibold transition-all hover:opacity-90 active:scale-[0.98]"
             style={{ backgroundColor: platformInfo.color }}
           >
-            <ExternalLink size={11} />
+            <ExternalLink size={12} />
             Ver na {platformInfo.name}
           </a>
         </div>

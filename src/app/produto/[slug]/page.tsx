@@ -3,22 +3,14 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ProductGrid from "@/components/ProductGrid";
 import Image from "next/image";
-import { formatPrice, getPlatformInfo } from "@/lib/utils";
-import { notFound } from "next/navigation";
-import {
-  ExternalLink,
-  ArrowLeft,
-  Share2,
-  Tag,
-  ChevronRight,
-  ShieldCheck,
-  Clock,
-  ShoppingBag,
-  TrendingDown,
-  Lock,
-} from "lucide-react";
 import Link from "next/link";
+import { notFound } from "next/navigation";
+import { ChevronRight, ExternalLink, ShieldCheck } from "lucide-react";
+import { formatPrice, getPlatformInfo } from "@/lib/utils";
 import type { Metadata } from "next";
+
+const PLACEHOLDER =
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600' fill='%23f8f9fa'%3E%3Crect width='600' height='600'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='18' fill='%23adb5bd'%3ESem imagem%3C/text%3E%3C/svg%3E";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -27,18 +19,16 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const product = await prisma.product
-    .findUnique({ where: { slug } })
+    .findFirst({ where: { slug } })
     .catch(() => null);
-  if (!product) return { title: "Produto não encontrado" };
-
   return {
-    title: product.title,
-    description: product.description.substring(0, 160),
+    title: product?.title || "Produto",
+    description:
+      product?.description || "Confira este produto com preço incrível.",
     openGraph: {
-      title: product.title,
-      description: product.description.substring(0, 160),
-      images: [product.image],
-      type: "website",
+      title: product?.title || "Produto",
+      description: product?.description || "",
+      images: product?.image ? [product.image] : [],
     },
   };
 }
@@ -47,7 +37,7 @@ export default async function ProductPage({ params }: Props) {
   const { slug } = await params;
 
   const product = await prisma.product
-    .findUnique({
+    .findFirst({
       where: { slug },
       include: { category: true },
     })
@@ -56,204 +46,168 @@ export default async function ProductPage({ params }: Props) {
   if (!product) notFound();
 
   const platformInfo = getPlatformInfo(product.platform);
-  const discount =
-    product.discount ||
-    (product.originalPrice
-      ? Math.round(
-          ((product.originalPrice - product.price) / product.originalPrice) *
-            100
-        )
-      : 0);
-
-  const hash = product.id.split("").reduce((a, c) => a + c.charCodeAt(0), 0);
-  const soldCount = (hash % 400) + 100;
+  const discount = product.originalPrice
+    ? Math.round(
+        ((product.originalPrice - product.price) / product.originalPrice) * 100
+      )
+    : 0;
 
   const relatedProducts = await prisma.product
     .findMany({
       where: {
         active: true,
         categoryId: product.categoryId,
-        id: { not: product.id },
+        NOT: { id: product.id },
       },
-      take: 4,
+      take: 8,
       orderBy: { createdAt: "desc" },
     })
     .catch(() => []);
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Product",
-    name: product.title,
-    description: product.description,
-    image: product.image,
-    offers: {
-      "@type": "Offer",
-      price: product.price,
-      priceCurrency: "BRL",
-      availability: "https://schema.org/InStock",
-      url: product.affiliateLink,
-    },
-  };
+  // Track click
+  await prisma.product
+    .update({
+      where: { id: product.id },
+      data: { clicks: { increment: 1 } },
+    })
+    .catch(() => {});
 
   return (
     <>
       <Header />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-      <main className="site-container py-5 sm:py-8">
-        {/* Breadcrumb */}
-        <nav className="flex items-center gap-1.5 text-xs text-gray-400 mb-5">
-          <Link href="/" className="hover:text-orange-500 transition-colors">
-            Início
-          </Link>
-          <ChevronRight size={12} />
-          <Link
-            href={`/categoria/${product.category.slug}`}
-            className="hover:text-orange-500 transition-colors"
-          >
-            {product.category.name}
-          </Link>
-          <ChevronRight size={12} />
-          <span className="text-gray-600 font-medium line-clamp-1">
-            {product.title}
-          </span>
-        </nav>
-
-        <Link
-          href="/"
-          className="inline-flex items-center gap-1 text-xs text-gray-400 hover:text-orange-500 transition-colors mb-5"
-        >
-          <ArrowLeft size={14} /> Voltar
-        </Link>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-10">
-          {/* Image */}
-          <div className="bg-white border border-gray-200 p-5 sm:p-8">
-            <div className="relative aspect-square">
-              <Image
-                src={product.image || "/placeholder.jpg"}
-                alt={product.title}
-                fill
-                className="object-contain"
-                sizes="(max-width: 768px) 100vw, 50vw"
-                priority
-              />
-              {discount > 0 && (
-                <div className="absolute top-0 left-0 bg-red-600 text-white text-xs font-black px-3 py-1.5 flex items-center gap-1">
-                  <TrendingDown size={12} />
-                  -{discount}% OFF
-                </div>
+      <main>
+        <div className="bg-white border-b border-gray-100">
+          <div className="site-container py-3">
+            <nav className="flex items-center gap-1.5 text-xs text-gray-400">
+              <Link href="/" className="hover:text-[#FF5733] transition-colors">
+                Início
+              </Link>
+              <ChevronRight size={12} />
+              {product.category && (
+                <>
+                  <Link
+                    href={`/categoria/${product.category.slug}`}
+                    className="hover:text-[#FF5733] transition-colors"
+                  >
+                    {product.category.name}
+                  </Link>
+                  <ChevronRight size={12} />
+                </>
               )}
-            </div>
+              <span className="text-[#212529] font-medium truncate max-w-[200px]">
+                {product.title}
+              </span>
+            </nav>
           </div>
+        </div>
 
-          {/* Details */}
-          <div className="space-y-4">
-            <div
-              className="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 text-white"
-              style={{ backgroundColor: platformInfo.color }}
-            >
-              {platformInfo.shortName} | {platformInfo.name}
-            </div>
-
-            <h1 className="text-lg sm:text-xl lg:text-2xl font-black text-gray-900 leading-tight">
-              {product.title}
-            </h1>
-
-            <div className="flex items-center gap-3 text-xs text-gray-500">
-              <span className="flex items-center gap-1">
-                <Tag size={12} />
-                <Link
-                  href={`/categoria/${product.category.slug}`}
-                  className="text-orange-500 hover:text-orange-600 font-semibold"
-                >
-                  {product.category.name}
-                </Link>
-              </span>
-              <span className="flex items-center gap-1">
-                <ShoppingBag size={12} />
-                {soldCount}+ vendidos
-              </span>
-            </div>
-
-            {/* Price */}
-            <div className="bg-gray-50 border border-gray-200 p-4 sm:p-6">
-              {product.originalPrice &&
-                product.originalPrice > product.price && (
-                  <p className="text-gray-400 line-through text-sm">
-                    De: {formatPrice(product.originalPrice)}
-                  </p>
+        <div className="site-container py-6 sm:py-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+            {/* Image */}
+            <div className="bg-white rounded-xl border border-gray-100 p-6 sm:p-8">
+              <div className="relative aspect-square">
+                <Image
+                  src={product.image || PLACEHOLDER}
+                  alt={product.title}
+                  fill
+                  className="object-contain"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  priority
+                />
+                {discount > 0 && (
+                  <div className="absolute top-3 left-3 bg-[#DC3545] text-white text-xs font-bold px-2.5 py-1 rounded-lg">
+                    -{discount}%
+                  </div>
                 )}
-              <p className="text-2xl sm:text-3xl font-black text-gray-900">
-                {formatPrice(product.price)}
-              </p>
-              {discount > 0 && (
-                <p className="text-green-700 text-xs font-bold mt-1 flex items-center gap-1">
-                  <ShieldCheck size={12} />
-                  Você economiza{" "}
-                  {formatPrice(
-                    (product.originalPrice || product.price) - product.price
-                  )}
-                </p>
-              )}
-              <div className="flex items-center gap-1.5 mt-2 text-[10px] text-orange-600 font-semibold">
-                <Clock size={10} className="animate-pulse-urgent" />
-                Preço sujeito a alteração - aproveite agora
               </div>
             </div>
 
-            {/* CTA */}
-            <a
-              href={product.affiliateLink}
-              target="_blank"
-              rel="noopener noreferrer nofollow"
-              className="flex items-center justify-center gap-2 w-full py-3.5 px-6 text-white text-base font-black uppercase tracking-wider transition-all hover:brightness-110 active:scale-[0.98]"
-              style={{ backgroundColor: platformInfo.color }}
-            >
-              <ExternalLink size={18} />
-              Comprar na {platformInfo.name}
-            </a>
-
-            {/* Trust */}
-            <div className="flex items-center justify-center gap-4 py-2 text-[10px] text-gray-400">
-              <span className="flex items-center gap-0.5">
-                <Lock size={10} className="text-green-500" />
-                Compra segura
+            {/* Info */}
+            <div>
+              {/* Platform */}
+              <span
+                className="inline-block text-[10px] font-semibold px-2.5 py-1 rounded-md text-white mb-3"
+                style={{ backgroundColor: platformInfo.color }}
+              >
+                {platformInfo.name}
               </span>
-              <span className="flex items-center gap-0.5">
-                <ShieldCheck size={10} className="text-green-500" />
-                Link verificado
-              </span>
-            </div>
 
-            <button className="flex items-center justify-center gap-2 w-full py-3 px-6 border border-gray-200 text-gray-500 hover:border-gray-400 hover:text-gray-700 transition-all font-semibold text-sm">
-              <Share2 size={16} />
-              Compartilhar
-            </button>
+              <h1 className="font-heading text-lg sm:text-xl lg:text-2xl font-bold text-[#212529] mb-4 leading-snug">
+                {product.title}
+              </h1>
 
-            {/* Description */}
-            <div className="bg-white border border-gray-200 p-4 sm:p-6">
-              <h2 className="font-bold text-gray-900 text-sm mb-2">Descrição</h2>
-              <p className="text-gray-600 text-xs leading-relaxed whitespace-pre-line">
-                {product.description}
+              {/* Price */}
+              <div className="bg-white rounded-xl border border-gray-100 p-5 mb-5">
+                {product.originalPrice &&
+                  product.originalPrice > product.price && (
+                    <p className="text-sm text-gray-400 line-through mb-1">
+                      {formatPrice(product.originalPrice)}
+                    </p>
+                  )}
+                <p className="font-heading text-3xl sm:text-4xl font-bold text-[#212529]">
+                  {formatPrice(product.price)}
+                </p>
+                {discount > 0 && product.originalPrice && (
+                  <p className="text-sm font-semibold text-[#198754] mt-1.5">
+                    Economize {formatPrice(product.originalPrice - product.price)}
+                  </p>
+                )}
+              </div>
+
+              {/* CTA */}
+              <a
+                href={product.affiliateLink}
+                target="_blank"
+                rel="noopener noreferrer nofollow"
+                className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl text-white font-heading font-semibold text-base transition-all hover:opacity-90 active:scale-[0.99] mb-4"
+                style={{ backgroundColor: platformInfo.color }}
+              >
+                <ExternalLink size={16} />
+                Ver na {platformInfo.name}
+              </a>
+
+              {/* Trust */}
+              <div className="flex items-center gap-4 text-xs text-gray-500 mb-6">
+                <span className="flex items-center gap-1">
+                  <ShieldCheck size={14} className="text-[#198754]" />
+                  Link verificado
+                </span>
+                <span className="flex items-center gap-1">
+                  <ShieldCheck size={14} className="text-[#198754]" />
+                  Loja oficial
+                </span>
+              </div>
+
+              {/* Description */}
+              {product.description && (
+                <div className="bg-white rounded-xl border border-gray-100 p-5">
+                  <h2 className="font-heading font-semibold text-[#212529] text-sm mb-2">
+                    Sobre o produto
+                  </h2>
+                  <p className="text-sm text-gray-600 leading-relaxed whitespace-pre-line">
+                    {product.description}
+                  </p>
+                </div>
+              )}
+
+              {/* Disclaimer */}
+              <p className="text-[10px] text-gray-400 mt-4 leading-relaxed">
+                * Preço e disponibilidade sujeitos a alteração. Verifique no site da loja.
+                Este site contém links de afiliados.
               </p>
-            </div>
-
-            <div className="bg-amber-50 border border-amber-200 p-3 text-[10px] text-amber-700 leading-relaxed">
-              Preço e disponibilidade sujeitos a alteração. Confira o valor
-              atualizado diretamente na plataforma antes de comprar.
             </div>
           </div>
         </div>
 
-        {/* Related */}
+        {/* Related Products */}
         {relatedProducts.length > 0 && (
-          <section className="mt-10 sm:mt-14">
+          <section className="site-container py-6 sm:py-8">
+            <hr className="separator mb-6 sm:mb-8" />
             <ProductGrid
               products={relatedProducts}
-              title="Você também pode gostar"
+              title="Produtos relacionados"
+              showViewAll
+              viewAllLink={`/categoria/${product.category?.slug || ""}`}
             />
           </section>
         )}
