@@ -139,7 +139,7 @@ export default async function ProductPage({ params }: Props) {
               className="inline-flex items-center gap-1 text-sm font-semibold px-3 py-1 rounded-full text-white"
               style={{ backgroundColor: platformInfo.color }}
             >
-              {platformInfo.icon} Disponível na {platformInfo.name}
+              {platformInfo.shortName} | Disponível na {platformInfo.name}
             </div>
 
             <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-800">
@@ -197,7 +197,7 @@ export default async function ProductPage({ params }: Props) {
 
             {/* Description */}
             <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-gray-100">
-              <h2 className="font-bold text-gray-800 mb-2">📋 Descrição</h2>
+              <h2 className="font-bold text-gray-800 mb-2">Descrição</h2>
               <p className="text-gray-600 text-sm leading-relaxed whitespace-pre-line">
                 {product.description}
               </p>
@@ -205,7 +205,7 @@ export default async function ProductPage({ params }: Props) {
 
             {/* Disclaimer */}
             <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-3 text-xs text-yellow-700">
-              ⚠️ Preço e disponibilidade sujeitos a alteração. Confira o valor
+              Preço e disponibilidade sujeitos a alteração. Confira o valor
               atualizado diretamente na plataforma antes de comprar.
             </div>
           </div>
@@ -215,7 +215,7 @@ export default async function ProductPage({ params }: Props) {
         {relatedProducts.length > 0 && (
           <section className="mt-12">
             <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4">
-              💡 Você também pode gostar
+              Você também pode gostar
             </h2>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
               {relatedProducts.map((p, i) => (

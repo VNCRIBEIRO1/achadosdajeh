@@ -21,19 +21,19 @@ export default function Header() {
   };
 
   const categories = [
-    { name: "Eletrônicos", slug: "eletronicos", icon: "📱" },
-    { name: "Moda", slug: "moda", icon: "👗" },
-    { name: "Casa", slug: "casa", icon: "🏠" },
-    { name: "Beleza", slug: "beleza", icon: "💄" },
-    { name: "Esportes", slug: "esportes", icon: "⚽" },
-    { name: "Brinquedos", slug: "brinquedos", icon: "🧸" },
+    { name: "Eletrônicos", slug: "eletronicos" },
+    { name: "Moda", slug: "moda" },
+    { name: "Casa", slug: "casa" },
+    { name: "Beleza", slug: "beleza" },
+    { name: "Esportes", slug: "esportes" },
+    { name: "Brinquedos", slug: "brinquedos" },
   ];
 
   return (
     <header className="sticky top-0 z-50 bg-white shadow-sm">
       {/* Top bar */}
       <div className="bg-gradient-to-r from-orange-500 to-pink-500 text-white text-center text-xs sm:text-sm py-1.5 px-4 font-medium">
-        ✨ Ofertas selecionadas com carinho para você! Acesse e economize ✨
+        Frete gratis acima de R$79 em produtos selecionados | Ofertas atualizadas diariamente
       </div>
 
       {/* Main header */}
@@ -131,7 +131,7 @@ export default function Header() {
                 href="/"
                 className="px-3 py-1.5 rounded-full text-sm font-medium text-gray-600 hover:text-orange-600 hover:bg-orange-50 transition-all"
               >
-                🏠 Início
+                Início
               </Link>
             </li>
             {categories.map((cat) => (
@@ -140,7 +140,7 @@ export default function Header() {
                   href={`/categoria/${cat.slug}`}
                   className="px-3 py-1.5 rounded-full text-sm font-medium text-gray-600 hover:text-orange-600 hover:bg-orange-50 transition-all"
                 >
-                  {cat.icon} {cat.name}
+                  {cat.name}
                 </Link>
               </li>
             ))}
@@ -149,7 +149,7 @@ export default function Header() {
                 href="/ofertas"
                 className="px-3 py-1.5 rounded-full text-sm font-semibold text-white bg-gradient-to-r from-orange-500 to-pink-500 hover:shadow-md transition-all"
               >
-                🔥 Ofertas
+                Ofertas
               </Link>
             </li>
           </ul>
@@ -166,7 +166,7 @@ export default function Header() {
                 onClick={() => setMenuOpen(false)}
                 className="block px-4 py-2.5 rounded-xl text-gray-700 hover:bg-orange-50 hover:text-orange-600 font-medium"
               >
-                🏠 Início
+                Início
               </Link>
             </li>
             {categories.map((cat) => (
@@ -176,7 +176,7 @@ export default function Header() {
                   onClick={() => setMenuOpen(false)}
                   className="block px-4 py-2.5 rounded-xl text-gray-700 hover:bg-orange-50 hover:text-orange-600 font-medium"
                 >
-                  {cat.icon} {cat.name}
+                  {cat.name}
                 </Link>
               </li>
             ))}
@@ -186,7 +186,7 @@ export default function Header() {
                 onClick={() => setMenuOpen(false)}
                 className="block px-4 py-2.5 rounded-xl text-white bg-gradient-to-r from-orange-500 to-pink-500 font-semibold text-center"
               >
-                🔥 Ofertas do Dia
+                Ofertas do Dia
               </Link>
             </li>
           </ul>

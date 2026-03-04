@@ -62,7 +62,7 @@ export default async function AdminDashboard() {
   return (
     <div>
       <h1 className="text-2xl font-bold text-gray-800 mb-6">
-        📊 Dashboard
+        Dashboard
       </h1>
 
       {/* Stats Cards */}
@@ -88,7 +88,7 @@ export default async function AdminDashboard() {
       {/* Top Products */}
       <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
         <h2 className="font-bold text-gray-800 mb-4">
-          🏆 Produtos Mais Clicados
+          Produtos Mais Clicados
         </h2>
         {stats.topProducts.length === 0 ? (
           <p className="text-gray-400 text-sm">Nenhum produto cadastrado ainda.</p>

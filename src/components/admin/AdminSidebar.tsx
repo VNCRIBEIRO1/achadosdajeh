@@ -96,7 +96,7 @@ export default function AdminSidebar() {
             href="/"
             className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-50 mb-1"
           >
-            🌐 Ver Site
+            Ver Site
           </Link>
           <button
             onClick={handleLogout}

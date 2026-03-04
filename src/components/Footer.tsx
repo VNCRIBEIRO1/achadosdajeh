@@ -16,7 +16,7 @@ export default function Footer() {
       <div className="bg-gradient-to-r from-orange-500 to-pink-500 py-8">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <h3 className="text-white text-xl sm:text-2xl font-bold mb-2">
-            📬 Receba as melhores ofertas!
+            Receba as melhores ofertas!
           </h3>
           <p className="text-orange-100 text-sm mb-4">
             Cadastre-se e seja a primeira a saber dos melhores achados
@@ -31,7 +31,7 @@ export default function Footer() {
               type="submit"
               className="px-6 py-2.5 bg-gray-900 text-white rounded-full font-semibold hover:bg-gray-800 transition-colors text-sm"
             >
-              Quero Ofertas! 🎉
+              Quero Ofertas!
             </button>
           </form>
         </div>
@@ -41,7 +41,7 @@ export default function Footer() {
         {/* Brand */}
         <div>
           <h3 className="text-xl font-bold text-white mb-3">
-            ✨ Achados da Jeh
+            Achados da Jeh
           </h3>
           <p className="text-sm text-gray-400 mb-4">
             Curadoria especial dos melhores produtos da internet com os preços
@@ -86,10 +86,10 @@ export default function Footer() {
         <div>
           <h4 className="text-white font-semibold mb-3">Plataformas</h4>
           <ul className="space-y-2">
-            <li className="text-sm text-gray-400">🛒 Shopee</li>
-            <li className="text-sm text-gray-400">🏪 Magazine Luiza</li>
-            <li className="text-sm text-gray-400">🤝 Mercado Livre</li>
-            <li className="text-sm text-gray-400">📦 Amazon</li>
+            <li className="text-sm text-gray-400">Shopee</li>
+            <li className="text-sm text-gray-400">Magazine Luiza</li>
+            <li className="text-sm text-gray-400">Mercado Livre</li>
+            <li className="text-sm text-gray-400">Amazon</li>
           </ul>
         </div>
 

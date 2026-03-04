@@ -5,6 +5,8 @@ import Link from "next/link";
 import { formatPrice, getPlatformInfo } from "@/lib/utils";
 import { ExternalLink, TrendingDown } from "lucide-react";
 
+const PLACEHOLDER = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' fill='%23f3f4f6'%3E%3Crect width='400' height='400'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='14' fill='%239ca3af'%3ESem imagem%3C/text%3E%3C/svg%3E";
+
 interface ProductCardProps {
   product: {
     id: string;
@@ -33,7 +35,7 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
       {/* Image */}
       <Link href={`/produto/${product.slug}`} className="relative block aspect-square overflow-hidden bg-gray-50">
         <Image
-          src={product.image || "/placeholder.jpg"}
+          src={product.image || PLACEHOLDER}
           alt={product.title}
           fill
           className="object-contain p-4 group-hover:scale-105 transition-transform duration-500"
@@ -46,10 +48,10 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
           </div>
         )}
         <div
-          className="absolute top-2 right-2 text-xs font-semibold px-2 py-1 rounded-full text-white"
+          className="absolute top-2 right-2 text-[10px] font-bold px-2 py-1 rounded-full text-white uppercase tracking-wide"
           style={{ backgroundColor: platformInfo.color }}
         >
-          {platformInfo.icon} {platformInfo.name}
+          {platformInfo.shortName}
         </div>
       </Link>
 

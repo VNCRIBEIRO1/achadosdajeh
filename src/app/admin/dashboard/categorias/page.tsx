@@ -62,7 +62,7 @@ export default function CategoriesPage() {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-gray-800">📂 Categorias</h1>
+        <h1 className="text-2xl font-bold text-gray-800">Categorias</h1>
         <button
           onClick={() => setShowForm(true)}
           className="flex items-center gap-2 px-4 py-2 bg-orange-500 text-white rounded-xl font-medium hover:bg-orange-600 transition-colors text-sm"
@@ -98,7 +98,7 @@ export default function CategoriesPage() {
                   value={icon}
                   onChange={(e) => setIcon(e.target.value)}
                   className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:border-orange-400 focus:outline-none text-sm"
-                  placeholder="📱"
+                  placeholder=""
                 />
               </div>
               <button
@@ -117,7 +117,7 @@ export default function CategoriesPage() {
           <div key={cat.id} className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <span className="text-2xl">{cat.icon || "📦"}</span>
+                <span className="text-2xl">{cat.icon || ""}</span>
                 <div>
                   <h3 className="font-semibold text-gray-800">{cat.name}</h3>
                   <p className="text-xs text-gray-400">{cat._count?.products || 0} produtos</p>

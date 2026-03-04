@@ -140,7 +140,7 @@ export default function ProductsPage() {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-gray-800">📦 Produtos</h1>
+        <h1 className="text-2xl font-bold text-gray-800">Produtos</h1>
         <button
           onClick={() => {
             resetForm();
@@ -231,12 +231,12 @@ export default function ProductsPage() {
                     onChange={(e) => setForm({ ...form, platform: e.target.value })}
                     className="w-full px-3 py-2 border border-gray-200 rounded-xl focus:border-orange-400 focus:outline-none text-sm"
                   >
-                    <option value="shopee">🛒 Shopee</option>
-                    <option value="magalu">🏪 Magazine Luiza</option>
-                    <option value="mercadolivre">🤝 Mercado Livre</option>
-                    <option value="amazon">📦 Amazon</option>
-                    <option value="americanas">🏬 Americanas</option>
-                    <option value="outro">🔗 Outro</option>
+                    <option value="shopee">Shopee</option>
+                    <option value="magalu">Magazine Luiza</option>
+                    <option value="mercadolivre">Mercado Livre</option>
+                    <option value="amazon">Amazon</option>
+                    <option value="americanas">Americanas</option>
+                    <option value="outro">Outro</option>
                   </select>
                 </div>
 

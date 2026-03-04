@@ -51,7 +51,7 @@ export default async function CategoryPage({ params }: Props) {
 
         <div className="mb-6">
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">
-            {category.icon || "📦"} {category.name}
+            {category.name}
           </h1>
           <p className="text-gray-500 mt-1">
             {category.products.length} produto(s) encontrado(s)

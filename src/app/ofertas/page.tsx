@@ -30,7 +30,7 @@ export default async function OffersPage() {
         </nav>
 
         <div className="bg-gradient-to-r from-orange-500 to-pink-500 rounded-2xl p-6 sm:p-8 mb-6 text-white text-center">
-          <h1 className="text-2xl sm:text-4xl font-bold mb-2">🔥 Ofertas do Dia</h1>
+          <h1 className="text-2xl sm:text-4xl font-bold mb-2">Ofertas do Dia</h1>
           <p className="text-orange-100">Produtos selecionados com os melhores preços da internet</p>
         </div>
 

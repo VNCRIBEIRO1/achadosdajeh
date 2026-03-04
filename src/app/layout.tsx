@@ -10,7 +10,7 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   title: {
-    default: "Achados da Jeh ✨ | Os Melhores Achados da Internet",
+    default: "Achados da Jeh | Os Melhores Achados da Internet",
     template: "%s | Achados da Jeh",
   },
   description:
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "pt_BR",
     siteName: "Achados da Jeh",
-    title: "Achados da Jeh ✨ | Os Melhores Achados da Internet",
+    title: "Achados da Jeh | Os Melhores Achados da Internet",
     description:
       "Descubra os melhores produtos com preços incríveis! Curadoria especial de ofertas.",
   },

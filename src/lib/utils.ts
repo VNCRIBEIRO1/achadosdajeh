@@ -18,13 +18,13 @@ export function formatPrice(price: number): string {
 }
 
 export function getPlatformInfo(platform: string) {
-  const platforms: Record<string, { name: string; color: string; icon: string }> = {
-    shopee: { name: "Shopee", color: "#EE4D2D", icon: "🛒" },
-    magalu: { name: "Magazine Luiza", color: "#0086FF", icon: "🏪" },
-    mercadolivre: { name: "Mercado Livre", color: "#FFE600", icon: "🤝" },
-    amazon: { name: "Amazon", color: "#FF9900", icon: "📦" },
-    americanas: { name: "Americanas", color: "#E60014", icon: "🏬" },
-    outro: { name: "Outro", color: "#6B7280", icon: "🔗" },
+  const platforms: Record<string, { name: string; color: string; shortName: string }> = {
+    shopee: { name: "Shopee", color: "#EE4D2D", shortName: "Shopee" },
+    magalu: { name: "Magazine Luiza", color: "#0086FF", shortName: "Magalu" },
+    mercadolivre: { name: "Mercado Livre", color: "#2D3277", shortName: "ML" },
+    amazon: { name: "Amazon", color: "#FF9900", shortName: "Amazon" },
+    americanas: { name: "Americanas", color: "#E60014", shortName: "Americanas" },
+    outro: { name: "Outro", color: "#6B7280", shortName: "Link" },
   };
   return platforms[platform.toLowerCase()] || platforms.outro;
 }

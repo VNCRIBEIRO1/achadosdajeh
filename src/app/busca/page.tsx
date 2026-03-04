@@ -58,7 +58,7 @@ export default async function SearchPage({ searchParams }: Props) {
         </nav>
 
         <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">
-          🔍 {q ? `Resultados para "${q}"` : "Buscar Produtos"}
+          {q ? `Resultados para "${q}"` : "Buscar Produtos"}
         </h1>
         {q && (
           <p className="text-gray-500 mb-6">
