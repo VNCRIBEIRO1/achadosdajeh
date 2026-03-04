@@ -1,9 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { Smartphone, ShirtIcon, Home, Sparkles, Dumbbell, ToyBrick, BookOpen, Gamepad2, Car, PawPrint, Pill, Apple, Package } from "lucide-react";
+import { Smartphone, ShirtIcon, Home, Sparkles, Dumbbell, ToyBrick, BookOpen, Gamepad2, Car, PawPrint, Pill, Apple, Package, ChevronLeft, ChevronRight } from "lucide-react";
 import { useRef } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface CategoryGridProps {
   categories: {
@@ -30,20 +29,18 @@ const categoryIcons: Record<string, React.ElementType> = {
   alimentos: Apple,
 };
 
-const categoryColors: Record<string, { bg: string; ring: string; icon: string }> = {
-  eletronicos: { bg: "bg-blue-50", ring: "ring-blue-200 group-hover:ring-blue-400", icon: "text-blue-600" },
-  moda: { bg: "bg-pink-50", ring: "ring-pink-200 group-hover:ring-pink-400", icon: "text-pink-600" },
-  casa: { bg: "bg-amber-50", ring: "ring-amber-200 group-hover:ring-amber-400", icon: "text-amber-600" },
-  beleza: { bg: "bg-purple-50", ring: "ring-purple-200 group-hover:ring-purple-400", icon: "text-purple-600" },
-  esportes: { bg: "bg-green-50", ring: "ring-green-200 group-hover:ring-green-400", icon: "text-green-600" },
-  brinquedos: { bg: "bg-red-50", ring: "ring-red-200 group-hover:ring-red-400", icon: "text-red-600" },
-  livros: { bg: "bg-indigo-50", ring: "ring-indigo-200 group-hover:ring-indigo-400", icon: "text-indigo-600" },
-  games: { bg: "bg-cyan-50", ring: "ring-cyan-200 group-hover:ring-cyan-400", icon: "text-cyan-600" },
-  automotivo: { bg: "bg-slate-50", ring: "ring-slate-200 group-hover:ring-slate-400", icon: "text-slate-600" },
-  pets: { bg: "bg-teal-50", ring: "ring-teal-200 group-hover:ring-teal-400", icon: "text-teal-600" },
+const categoryColors: Record<string, string> = {
+  eletronicos: "bg-blue-500",
+  moda: "bg-pink-500",
+  casa: "bg-amber-500",
+  beleza: "bg-purple-500",
+  esportes: "bg-green-500",
+  brinquedos: "bg-red-500",
+  livros: "bg-indigo-500",
+  games: "bg-cyan-500",
+  automotivo: "bg-slate-500",
+  pets: "bg-teal-500",
 };
-
-const defaultColor = { bg: "bg-gray-50", ring: "ring-gray-200 group-hover:ring-gray-400", icon: "text-gray-600" };
 
 export default function CategoryGrid({ categories }: CategoryGridProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -65,39 +62,38 @@ export default function CategoryGrid({ categories }: CategoryGridProps) {
 
   return (
     <div className="relative group/cat">
-      {/* Arrows */}
       <button
         onClick={() => scroll("left")}
-        className="absolute -left-3 top-1/2 -translate-y-1/2 z-10 bg-white shadow-lg border border-gray-200 p-1.5 rounded-full opacity-0 group-hover/cat:opacity-100 transition-opacity hidden sm:flex"
+        className="absolute -left-2 top-1/2 -translate-y-1/2 z-10 bg-white shadow border border-gray-200 p-1 opacity-0 group-hover/cat:opacity-100 transition-opacity hidden sm:flex"
       >
-        <ChevronLeft size={16} className="text-gray-500" />
+        <ChevronLeft size={14} className="text-gray-500" />
       </button>
       <button
         onClick={() => scroll("right")}
-        className="absolute -right-3 top-1/2 -translate-y-1/2 z-10 bg-white shadow-lg border border-gray-200 p-1.5 rounded-full opacity-0 group-hover/cat:opacity-100 transition-opacity hidden sm:flex"
+        className="absolute -right-2 top-1/2 -translate-y-1/2 z-10 bg-white shadow border border-gray-200 p-1 opacity-0 group-hover/cat:opacity-100 transition-opacity hidden sm:flex"
       >
-        <ChevronRight size={16} className="text-gray-500" />
+        <ChevronRight size={14} className="text-gray-500" />
       </button>
 
       <div
         ref={scrollRef}
-        className="flex gap-5 sm:gap-6 lg:gap-8 overflow-x-auto no-scrollbar py-2 px-1 sm:justify-center"
+        className="flex gap-3 sm:gap-4 overflow-x-auto no-scrollbar py-1 sm:justify-center"
       >
         {displayCategories.map((cat) => {
           const IconComponent = categoryIcons[cat.slug] || Package;
-          const colors = categoryColors[cat.slug] || defaultColor;
+          const bgColor = categoryColors[cat.slug] || "bg-gray-500";
           return (
             <Link
               key={cat.id}
               href={`/categoria/${cat.slug}`}
-              className="group shrink-0 flex flex-col items-center gap-2 w-[72px] sm:w-[80px]"
+              className="group shrink-0 flex flex-col items-center gap-1.5 w-[64px] sm:w-[72px]"
             >
               <div
-                className={`w-14 h-14 sm:w-16 sm:h-16 rounded-full ${colors.bg} ring-2 ${colors.ring} flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:shadow-md`}
+                className={`w-12 h-12 sm:w-14 sm:h-14 ${bgColor} flex items-center justify-center transition-transform group-hover:scale-110`}
               >
-                <IconComponent className={colors.icon} size={22} />
+                <IconComponent className="text-white" size={20} />
               </div>
-              <span className="text-[11px] sm:text-xs font-semibold text-gray-600 group-hover:text-gray-900 text-center leading-tight transition-colors">
+              <span className="text-[10px] sm:text-[11px] font-semibold text-gray-600 group-hover:text-gray-900 text-center leading-tight transition-colors">
                 {cat.name}
               </span>
             </Link>

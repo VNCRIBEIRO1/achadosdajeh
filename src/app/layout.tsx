@@ -1,14 +1,21 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import BottomBar from "@/components/BottomBar";
-import CanvasBackground from "@/components/CanvasBackground";
+import Script from "next/script";
 
 const poppins = Poppins({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800"],
+  weight: ["300", "400", "500", "600", "700", "800", "900"],
   variable: "--font-poppins",
 });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  themeColor: "#F97316",
+};
 
 export const metadata: Metadata = {
   title: {
@@ -16,7 +23,7 @@ export const metadata: Metadata = {
     template: "%s | Achados da Jeh",
   },
   description:
-    "Descubra os melhores produtos com preços incríveis! Curadoria especial de ofertas da Shopee, Magazine Luiza e Mercado Livre. Economize agora!",
+    "Descubra os melhores produtos com preços incríveis! Curadoria especial de ofertas da Shopee, Magazine Luiza e Mercado Livre.",
   keywords: [
     "achados",
     "promoções",
@@ -24,10 +31,9 @@ export const metadata: Metadata = {
     "shopee",
     "magazine luiza",
     "mercado livre",
-    "produtos afiliados",
-    "melhores preços",
     "cupons",
     "desconto",
+    "melhores preços",
   ],
   openGraph: {
     type: "website",
@@ -38,6 +44,14 @@ export const metadata: Metadata = {
       "Descubra os melhores produtos com preços incríveis! Curadoria especial de ofertas.",
   },
   robots: { index: true, follow: true },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Achados da Jeh",
+  },
+  formatDetection: {
+    telephone: false,
+  },
 };
 
 export default function RootLayout({
@@ -47,12 +61,28 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-BR">
-      <body className={`${poppins.variable} font-sans antialiased bg-[#F5F5F7] text-gray-900`}>
-        <CanvasBackground />
-        <div className="relative z-10 pb-bottom-bar">
-          {children}
-        </div>
+      <head>
+        <meta name="mobile-web-app-capable" content="yes" />
+        <link rel="manifest" href="/manifest.webmanifest" />
+      </head>
+      <body
+        className={`${poppins.variable} font-sans antialiased bg-white text-gray-900`}
+      >
+        <div className="relative pb-bottom-bar">{children}</div>
         <BottomBar />
+        <Script
+          id="sw-register"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                  navigator.serviceWorker.register('/sw.js').catch(() => {});
+                });
+              }
+            `,
+          }}
+        />
       </body>
     </html>
   );

@@ -4,10 +4,10 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { formatPrice, getPlatformInfo } from "@/lib/utils";
-import { ChevronLeft, ChevronRight, ExternalLink, Heart, Star } from "lucide-react";
+import { ChevronLeft, ChevronRight, ExternalLink, ShoppingBag, TrendingDown, Clock } from "lucide-react";
 
 const PLACEHOLDER =
-  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' fill='%23f3f4f6'%3E%3Crect width='400' height='400'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='14' fill='%239ca3af'%3ESem imagem%3C/text%3E%3C/svg%3E";
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' fill='%23f5f5f5'%3E%3Crect width='400' height='400'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='14' fill='%239ca3af'%3ESem imagem%3C/text%3E%3C/svg%3E";
 
 interface Product {
   id: string;
@@ -30,7 +30,6 @@ interface ProductCarouselProps {
 }
 
 function CarouselCard({ product }: { product: Product }) {
-  const [liked, setLiked] = useState(false);
   const platformInfo = getPlatformInfo(product.platform);
   const discount =
     product.discount ||
@@ -41,82 +40,65 @@ function CarouselCard({ product }: { product: Product }) {
         )
       : 0);
 
+  const hash = product.id.split("").reduce((a, c) => a + c.charCodeAt(0), 0);
+  const soldCount = (hash % 300) + 50;
+
   return (
-    <div className="shrink-0 w-[160px] sm:w-[190px] lg:w-[210px] bg-white rounded-2xl border border-gray-100 overflow-hidden group hover:shadow-lg transition-all duration-300 flex flex-col">
+    <div className="shrink-0 w-[150px] sm:w-[175px] lg:w-[195px] bg-white border border-gray-100 overflow-hidden group hover:border-gray-300 transition-colors flex flex-col">
       {/* Image */}
       <Link
         href={`/produto/${product.slug}`}
-        className="relative block aspect-square overflow-hidden bg-gray-50"
+        className="relative block aspect-square overflow-hidden bg-white"
       >
         <Image
           src={product.image || PLACEHOLDER}
           alt={product.title}
           fill
-          className="object-contain p-3 group-hover:scale-105 transition-transform duration-300"
-          sizes="210px"
+          className="object-contain p-2.5 group-hover:scale-105 transition-transform duration-300"
+          sizes="195px"
         />
-        {/* Platform badge */}
+        {discount > 0 && (
+          <div className="absolute top-0 left-0 bg-red-600 text-white text-[9px] font-black px-1.5 py-0.5 flex items-center gap-0.5">
+            <TrendingDown size={8} />
+            -{discount}%
+          </div>
+        )}
         <div
-          className="absolute top-2 right-2 text-[8px] font-bold px-2 py-0.5 rounded-md text-white uppercase tracking-wider"
+          className="absolute top-0 right-0 text-[7px] font-bold px-1.5 py-0.5 text-white uppercase tracking-wider"
           style={{ backgroundColor: platformInfo.color }}
         >
           {platformInfo.shortName}
         </div>
-        {/* Favorite */}
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            setLiked(!liked);
-          }}
-          className={`absolute top-2 left-2 p-1.5 rounded-full transition-all ${
-            liked
-              ? "bg-red-50 text-red-500"
-              : "bg-white/70 text-gray-300 opacity-0 group-hover:opacity-100"
-          } hover:scale-110`}
-        >
-          <Heart size={12} fill={liked ? "currentColor" : "none"} />
-        </button>
       </Link>
 
       {/* Info */}
-      <div className="p-3 flex flex-col flex-1">
+      <div className="p-2.5 flex flex-col flex-1 border-t border-gray-50">
         <Link href={`/produto/${product.slug}`}>
-          <h3 className="text-xs sm:text-[13px] font-medium text-gray-700 line-clamp-2 hover:text-orange-600 transition-colors leading-snug mb-2">
+          <h3 className="text-[10px] sm:text-[11px] font-medium text-gray-700 line-clamp-2 hover:text-orange-600 transition-colors leading-snug mb-1.5">
             {product.title}
           </h3>
         </Link>
 
-        <div className="mt-auto">
-          {/* Rating (decorative) */}
-          <div className="flex items-center gap-0.5 mb-1.5">
-            {[1, 2, 3, 4, 5].map((s) => (
-              <Star
-                key={s}
-                size={10}
-                className={s <= 4 ? "text-amber-400" : "text-gray-200"}
-                fill={s <= 4 ? "currentColor" : "none"}
-              />
-            ))}
-          </div>
+        <div className="flex items-center gap-1 text-[8px] text-gray-400 mb-1.5">
+          <ShoppingBag size={7} />
+          <span>{soldCount}+ vendidos</span>
+        </div>
 
-          {/* Price */}
+        <div className="mt-auto">
           {product.originalPrice && product.originalPrice > product.price && (
-            <p className="text-[10px] text-gray-400 line-through">
+            <p className="text-[9px] text-gray-400 line-through">
               {formatPrice(product.originalPrice)}
             </p>
           )}
-          <div className="flex items-baseline gap-1.5">
-            <p className="text-base sm:text-lg font-extrabold text-gray-900">
-              {formatPrice(product.price)}
+          <p className="text-sm sm:text-base font-black text-gray-900 leading-none">
+            {formatPrice(product.price)}
+          </p>
+          {discount > 0 && (
+            <p className="text-[8px] font-bold text-green-700 mt-0.5">
+              Economize {formatPrice((product.originalPrice || product.price) - product.price)}
             </p>
-            {discount > 0 && (
-              <span className="text-[10px] font-bold text-red-500">
-                -{discount}%
-              </span>
-            )}
-          </div>
+          )}
 
-          {/* CTA */}
           <a
             href={product.affiliateLink}
             target="_blank"
@@ -124,10 +106,10 @@ function CarouselCard({ product }: { product: Product }) {
             onClick={() => {
               fetch(`/api/products/${product.id}/click`, { method: "POST" });
             }}
-            className="mt-2 w-full flex items-center justify-center gap-1 py-2 px-2 rounded-lg text-white text-[11px] sm:text-xs font-semibold transition-all hover:brightness-110 hover:shadow-md"
+            className="mt-1.5 w-full flex items-center justify-center gap-1 py-1.5 text-white text-[9px] sm:text-[10px] font-bold uppercase tracking-wider transition-all hover:brightness-110"
             style={{ backgroundColor: platformInfo.color }}
           >
-            <ExternalLink size={11} />
+            <ExternalLink size={9} />
             Ver na {platformInfo.name}
           </a>
         </div>
@@ -139,8 +121,8 @@ function CarouselCard({ product }: { product: Product }) {
 export default function ProductCarousel({
   products,
   title,
-  titleColor = "bg-gradient-to-r from-orange-500 to-orange-600",
-  borderColor = "border-orange-200",
+  titleColor = "bg-orange-500",
+  borderColor = "border-gray-200",
   viewAllLink = "/ofertas",
 }: ProductCarouselProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -157,25 +139,26 @@ export default function ProductCarousel({
   const scroll = (direction: "left" | "right") => {
     const el = scrollRef.current;
     if (!el) return;
-    const amount = direction === "left" ? -300 : 300;
-    el.scrollBy({ left: amount, behavior: "smooth" });
+    el.scrollBy({ left: direction === "left" ? -280 : 280, behavior: "smooth" });
     setTimeout(checkScroll, 400);
   };
 
   if (products.length === 0) return null;
 
   return (
-    <div
-      className={`bg-white rounded-2xl border ${borderColor} overflow-hidden shadow-sm`}
-    >
-      {/* Header with colored title */}
-      <div
-        className={`${titleColor} px-5 py-3 flex items-center justify-between`}
-      >
-        <h2 className="text-white font-bold text-sm sm:text-base">{title}</h2>
+    <div className={`bg-white border ${borderColor} overflow-hidden`}>
+      {/* Header */}
+      <div className={`${titleColor} px-4 py-2.5 flex items-center justify-between`}>
+        <div className="flex items-center gap-2">
+          <h2 className="text-white font-bold text-sm">{title}</h2>
+          <span className="text-white/60 text-[10px] flex items-center gap-0.5">
+            <Clock size={9} />
+            Oferta limitada
+          </span>
+        </div>
         <Link
           href={viewAllLink}
-          className="text-white/80 hover:text-white text-xs font-medium transition-colors"
+          className="text-white/70 hover:text-white text-[11px] font-medium transition-colors"
         >
           Ver todos &rsaquo;
         </Link>
@@ -183,30 +166,27 @@ export default function ProductCarousel({
 
       {/* Carousel */}
       <div className="relative group/carousel">
-        {/* Left arrow */}
         {canScrollLeft && (
           <button
             onClick={() => scroll("left")}
-            className="absolute left-1 top-1/2 -translate-y-1/2 z-10 bg-white/95 shadow-lg border border-gray-200 p-2 rounded-full hover:bg-white transition-all opacity-0 group-hover/carousel:opacity-100"
+            className="absolute left-1 top-1/2 -translate-y-1/2 z-10 bg-white shadow border border-gray-200 p-1.5 hover:bg-gray-50 transition-all opacity-0 group-hover/carousel:opacity-100"
           >
-            <ChevronLeft size={18} className="text-gray-600" />
+            <ChevronLeft size={16} className="text-gray-600" />
           </button>
         )}
-
-        {/* Right arrow */}
         {canScrollRight && (
           <button
             onClick={() => scroll("right")}
-            className="absolute right-1 top-1/2 -translate-y-1/2 z-10 bg-white/95 shadow-lg border border-gray-200 p-2 rounded-full hover:bg-white transition-all opacity-0 group-hover/carousel:opacity-100"
+            className="absolute right-1 top-1/2 -translate-y-1/2 z-10 bg-white shadow border border-gray-200 p-1.5 hover:bg-gray-50 transition-all opacity-0 group-hover/carousel:opacity-100"
           >
-            <ChevronRight size={18} className="text-gray-600" />
+            <ChevronRight size={16} className="text-gray-600" />
           </button>
         )}
 
         <div
           ref={scrollRef}
           onScroll={checkScroll}
-          className="flex gap-3 overflow-x-auto no-scrollbar px-4 py-4"
+          className="flex gap-0 overflow-x-auto no-scrollbar"
         >
           {products.map((product) => (
             <CarouselCard key={product.id} product={product} />

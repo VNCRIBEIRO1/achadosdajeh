@@ -19,7 +19,7 @@ const defaultSlides = [
     id: "promo-1",
     title: "Ofertas imperdíveis toda semana",
     subtitle: "Produtos selecionados com até 70% de desconto nas melhores lojas",
-    gradient: "from-orange-600 via-orange-500 to-amber-400",
+    gradient: "from-orange-600 via-orange-500 to-amber-500",
     link: "/ofertas",
     cta: "Ver ofertas",
   },
@@ -27,7 +27,7 @@ const defaultSlides = [
     id: "promo-2",
     title: "Moda com os melhores preços",
     subtitle: "Roupas, calçados e acessórios das marcas que você ama",
-    gradient: "from-pink-600 via-rose-500 to-pink-400",
+    gradient: "from-gray-900 via-gray-800 to-gray-700",
     link: "/categoria/moda",
     cta: "Explorar moda",
   },
@@ -35,7 +35,7 @@ const defaultSlides = [
     id: "promo-3",
     title: "Eletrônicos e gadgets",
     subtitle: "Smartphones, fones, smartwatches e muito mais com preço baixo",
-    gradient: "from-violet-700 via-purple-600 to-indigo-500",
+    gradient: "from-blue-900 via-blue-800 to-indigo-800",
     link: "/categoria/eletronicos",
     cta: "Ver eletrônicos",
   },
@@ -62,37 +62,36 @@ export default function BannerSlider({ banners }: BannerSliderProps) {
 
   if (!hasRealBanners) {
     return (
-      <div className="relative w-full rounded-3xl overflow-hidden shadow-xl">
-        <div className="relative h-[200px] sm:h-[300px] md:h-[400px]">
+      <div className="relative w-full overflow-hidden">
+        <div className="relative h-[180px] sm:h-[280px] md:h-[360px] lg:h-[400px]">
           {defaultSlides.map((slide, index) => (
             <div
               key={slide.id}
-              className={`absolute inset-0 transition-all duration-700 ease-in-out ${
-                index === current
-                  ? "opacity-100 scale-100"
-                  : "opacity-0 scale-105"
+              className={`absolute inset-0 transition-opacity duration-700 ${
+                index === current ? "opacity-100" : "opacity-0"
               }`}
             >
               <div className={`w-full h-full bg-gradient-to-br ${slide.gradient} flex items-center`}>
-                <div className="absolute inset-0 opacity-10">
-                  <div className="absolute top-10 right-10 w-80 h-80 bg-white rounded-full blur-3xl" />
-                  <div className="absolute bottom-5 left-20 w-52 h-52 bg-white rounded-full blur-2xl" />
-                  <div className="absolute top-1/2 right-1/3 w-32 h-32 bg-white rounded-full blur-xl" />
+                <div className="absolute inset-0 opacity-[0.07]">
+                  <div className="absolute top-8 right-16 w-64 h-64 bg-white rounded-full blur-3xl" />
+                  <div className="absolute bottom-4 left-12 w-40 h-40 bg-white rounded-full blur-2xl" />
                 </div>
-                <div className="relative z-10 px-8 sm:px-14 max-w-2xl">
-                  <p className="text-white/70 text-xs sm:text-sm font-semibold uppercase tracking-wider mb-2">Achados da Jeh</p>
-                  <h2 className="text-white text-2xl sm:text-4xl lg:text-5xl font-extrabold mb-3 leading-tight">
+                <div className="relative z-10 site-container">
+                  <p className="text-white/60 text-[10px] sm:text-xs font-bold uppercase tracking-[0.2em] mb-2">
+                    Achados da Jeh
+                  </p>
+                  <h2 className="text-white text-xl sm:text-3xl lg:text-4xl font-black mb-2 leading-tight max-w-lg">
                     {slide.title}
                   </h2>
-                  <p className="text-white/80 text-sm sm:text-lg mb-6 max-w-md">
+                  <p className="text-white/70 text-xs sm:text-sm mb-5 max-w-md">
                     {slide.subtitle}
                   </p>
                   <Link
                     href={slide.link}
-                    className="inline-flex items-center gap-2 px-7 py-3.5 bg-white text-gray-900 rounded-xl font-bold text-sm sm:text-base hover:bg-gray-50 transition-all shadow-lg hover:shadow-xl hover:scale-105"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-gray-900 font-bold text-sm hover:bg-gray-100 transition-colors"
                   >
                     {slide.cta}
-                    <ArrowRight size={16} />
+                    <ArrowRight size={14} />
                   </Link>
                 </div>
               </div>
@@ -104,27 +103,25 @@ export default function BannerSlider({ banners }: BannerSliderProps) {
           <>
             <button
               onClick={prevSlide}
-              className="absolute left-3 top-1/2 -translate-y-1/2 bg-white/20 backdrop-blur-sm hover:bg-white/40 p-2 rounded-full transition-colors z-20"
+              className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/20 hover:bg-black/40 p-1.5 text-white transition-colors z-20"
               aria-label="Anterior"
             >
-              <ChevronLeft className="text-white" size={20} />
+              <ChevronLeft size={18} />
             </button>
             <button
               onClick={nextSlide}
-              className="absolute right-3 top-1/2 -translate-y-1/2 bg-white/20 backdrop-blur-sm hover:bg-white/40 p-2 rounded-full transition-colors z-20"
+              className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/20 hover:bg-black/40 p-1.5 text-white transition-colors z-20"
               aria-label="Próximo"
             >
-              <ChevronRight className="text-white" size={20} />
+              <ChevronRight size={18} />
             </button>
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+            <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-20">
               {defaultSlides.map((_, i) => (
                 <button
                   key={i}
                   onClick={() => setCurrent(i)}
-                  className={`h-2 rounded-full transition-all ${
-                    i === current
-                      ? "bg-white w-8"
-                      : "bg-white/40 w-2 hover:bg-white/60"
+                  className={`h-1 transition-all ${
+                    i === current ? "bg-white w-6" : "bg-white/40 w-1.5"
                   }`}
                   aria-label={`Slide ${i + 1}`}
                 />
@@ -137,16 +134,12 @@ export default function BannerSlider({ banners }: BannerSliderProps) {
   }
 
   return (
-    <div className="relative w-full h-[180px] sm:h-[280px] md:h-[380px] rounded-2xl overflow-hidden">
+    <div className="relative w-full h-[180px] sm:h-[280px] md:h-[360px] lg:h-[400px] overflow-hidden">
       {banners.map((banner, index) => (
         <div
           key={banner.id}
-          className={`absolute inset-0 transition-all duration-700 ease-in-out ${
-            index === current
-              ? "opacity-100 translate-x-0"
-              : index < current
-              ? "opacity-0 -translate-x-full"
-              : "opacity-0 translate-x-full"
+          className={`absolute inset-0 transition-opacity duration-700 ${
+            index === current ? "opacity-100" : "opacity-0"
           }`}
         >
           <div
@@ -154,22 +147,22 @@ export default function BannerSlider({ banners }: BannerSliderProps) {
             style={{ backgroundImage: `url(${banner.image})` }}
           >
             <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent" />
-            <div className="relative z-10 px-8 sm:px-14 max-w-lg">
-              <h2 className="text-white text-2xl sm:text-4xl font-bold mb-2">
+            <div className="relative z-10 site-container">
+              <h2 className="text-white text-xl sm:text-3xl lg:text-4xl font-black mb-2 max-w-lg">
                 {banner.title}
               </h2>
               {banner.subtitle && (
-                <p className="text-white/80 text-sm sm:text-lg">
+                <p className="text-white/80 text-sm sm:text-base max-w-md">
                   {banner.subtitle}
                 </p>
               )}
               {banner.link && (
                 <a
                   href={banner.link}
-                  className="inline-flex items-center gap-2 mt-4 px-6 py-2.5 bg-orange-500 text-white rounded-full font-semibold hover:bg-orange-600 transition-colors"
+                  className="inline-flex items-center gap-2 mt-4 px-5 py-2.5 bg-orange-500 text-white font-bold text-sm hover:bg-orange-600 transition-colors"
                 >
                   Ver ofertas
-                  <ArrowRight size={16} />
+                  <ArrowRight size={14} />
                 </a>
               )}
             </div>
@@ -181,27 +174,25 @@ export default function BannerSlider({ banners }: BannerSliderProps) {
         <>
           <button
             onClick={prevSlide}
-            className="absolute left-3 top-1/2 -translate-y-1/2 bg-white/20 backdrop-blur-sm hover:bg-white/40 p-2 rounded-full transition-colors z-20"
+            className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/20 hover:bg-black/40 p-1.5 text-white transition-colors z-20"
             aria-label="Anterior"
           >
-            <ChevronLeft className="text-white" size={20} />
+            <ChevronLeft size={18} />
           </button>
           <button
             onClick={nextSlide}
-            className="absolute right-3 top-1/2 -translate-y-1/2 bg-white/20 backdrop-blur-sm hover:bg-white/40 p-2 rounded-full transition-colors z-20"
+            className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/20 hover:bg-black/40 p-1.5 text-white transition-colors z-20"
             aria-label="Próximo"
           >
-            <ChevronRight className="text-white" size={20} />
+            <ChevronRight size={18} />
           </button>
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-20">
             {banners.map((_, i) => (
               <button
                 key={i}
                 onClick={() => setCurrent(i)}
-                className={`h-2 rounded-full transition-all ${
-                  i === current
-                    ? "bg-white w-8"
-                    : "bg-white/40 w-2 hover:bg-white/60"
+                className={`h-1 transition-all ${
+                  i === current ? "bg-white w-6" : "bg-white/40 w-1.5"
                 }`}
                 aria-label={`Slide ${i + 1}`}
               />

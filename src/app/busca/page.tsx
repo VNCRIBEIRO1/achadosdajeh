@@ -9,11 +9,13 @@ interface Props {
   searchParams: Promise<{ q?: string }>;
 }
 
-export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
+export async function generateMetadata({
+  searchParams,
+}: Props): Promise<Metadata> {
   const { q } = await searchParams;
   return {
     title: q ? `Resultados para "${q}"` : "Buscar Produtos",
-    description: `Busque e encontre os melhores produtos e ofertas.`,
+    description: "Busque e encontre os melhores produtos e ofertas.",
   };
 }
 
@@ -51,18 +53,20 @@ export default async function SearchPage({ searchParams }: Props) {
     <>
       <Header />
       <main className="site-container py-6 sm:py-8">
-        <nav className="flex items-center gap-1.5 text-sm text-gray-400 mb-6">
-          <a href="/" className="hover:text-orange-500 transition-colors">Início</a>
-          <ChevronRight size={14} />
+        <nav className="flex items-center gap-1.5 text-xs text-gray-400 mb-5">
+          <a href="/" className="hover:text-orange-500 transition-colors">
+            Início
+          </a>
+          <ChevronRight size={12} />
           <span className="text-gray-700 font-medium">Busca</span>
         </nav>
 
-        <div className="mb-8">
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-1">
+        <div className="mb-6">
+          <h1 className="text-lg sm:text-2xl font-black text-gray-900 mb-1">
             {q ? `Resultados para "${q}"` : "Buscar Produtos"}
           </h1>
           {q && (
-            <p className="text-gray-400 text-sm">
+            <p className="text-gray-400 text-xs">
               {products.length} resultado(s) encontrado(s)
             </p>
           )}

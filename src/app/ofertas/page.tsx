@@ -2,13 +2,14 @@ import { prisma } from "@/lib/db";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ProductGrid from "@/components/ProductGrid";
-import { Flame, ChevronRight } from "lucide-react";
+import { Zap, ChevronRight, Clock, ShieldCheck } from "lucide-react";
 import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Ofertas do Dia",
-  description: "Confira as melhores ofertas selecionadas com preços incríveis!",
+  description:
+    "Confira as melhores ofertas selecionadas com preços incríveis!",
 };
 
 export const revalidate = 60;
@@ -25,35 +26,47 @@ export default async function OffersPage() {
   return (
     <>
       <Header />
-      <main className="site-container py-6 sm:py-8">
-        {/* Breadcrumb */}
-        <nav className="flex items-center gap-1.5 text-sm text-gray-400 mb-6">
-          <Link href="/" className="hover:text-orange-500 transition-colors">Início</Link>
-          <ChevronRight size={14} />
-          <span className="text-gray-700 font-medium">Ofertas</span>
-        </nav>
+      <main>
+        {/* Hero */}
+        <div className="bg-orange-500">
+          <div className="site-container py-8 sm:py-10">
+            <nav className="flex items-center gap-1.5 text-xs text-orange-200 mb-4">
+              <Link href="/" className="hover:text-white transition-colors">
+                Início
+              </Link>
+              <ChevronRight size={12} />
+              <span className="text-white font-medium">Ofertas</span>
+            </nav>
 
-        {/* Hero banner */}
-        <div className="relative overflow-hidden bg-gradient-to-r from-orange-500 via-orange-500 to-pink-500 rounded-3xl p-8 sm:p-12 mb-8 text-white">
-          <div className="absolute inset-0 opacity-10">
-            <div className="absolute -top-20 -right-20 w-72 h-72 bg-white rounded-full" />
-            <div className="absolute -bottom-16 -left-16 w-56 h-56 bg-white rounded-full" />
-          </div>
-          <div className="relative flex items-center gap-3 mb-3">
-            <div className="bg-white/20 backdrop-blur-sm p-2.5 rounded-xl">
-              <Flame size={24} />
+            <div className="flex items-center gap-3 mb-2">
+              <div className="bg-white/15 p-2">
+                <Zap size={22} className="text-white" />
+              </div>
+              <h1 className="text-xl sm:text-3xl font-black text-white">
+                Ofertas do Dia
+              </h1>
             </div>
-            <div>
-              <h1 className="text-2xl sm:text-4xl font-extrabold">Ofertas do Dia</h1>
+            <p className="text-orange-200 text-sm max-w-md">
+              Produtos selecionados com os melhores preços da internet.
+              Atualizado diariamente!
+            </p>
+
+            <div className="flex items-center gap-4 mt-4 text-[10px] text-orange-200">
+              <span className="flex items-center gap-1">
+                <Clock size={10} />
+                Preços podem mudar
+              </span>
+              <span className="flex items-center gap-1">
+                <ShieldCheck size={10} />
+                {products.length} ofertas ativas
+              </span>
             </div>
           </div>
-          <p className="text-orange-100 text-sm sm:text-base max-w-lg">
-            Produtos selecionados com os melhores preços da internet. Atualizado diariamente!
-          </p>
-          <p className="mt-3 text-xs text-white/60 font-medium">{products.length} ofertas disponíveis</p>
         </div>
 
-        <ProductGrid products={products} />
+        <div className="site-container py-6 sm:py-8">
+          <ProductGrid products={products} />
+        </div>
       </main>
       <Footer />
     </>

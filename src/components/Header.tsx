@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { Search, Menu, X, Heart, ChevronRight, Flame, Tag } from "lucide-react";
+import { Search, Menu, X, Heart, ChevronRight, Zap, Tag, ShieldCheck } from "lucide-react";
 import { useRouter, usePathname } from "next/navigation";
 
 export default function Header() {
@@ -42,64 +42,65 @@ export default function Header() {
   return (
     <>
       <header
-        className={`sticky top-0 z-50 transition-all duration-300 ${
-          scrolled ? "shadow-lg" : "shadow-sm"
+        className={`sticky top-0 z-50 transition-shadow duration-200 ${
+          scrolled ? "shadow-md" : ""
         }`}
       >
-        {/* Announcement bar */}
+        {/* Urgency strip */}
         <div className="bg-gray-900 text-white overflow-hidden">
-          <div className="site-container py-1.5 flex items-center justify-center gap-2 text-xs sm:text-sm">
-            <Flame size={14} className="text-orange-400 shrink-0" />
-            <span className="font-medium truncate">
-              Frete grátis acima de R$79 em produtos selecionados
+          <div className="flex items-center justify-center gap-2 py-1.5 text-[11px] sm:text-xs font-semibold tracking-wide">
+            <Zap size={12} className="text-orange-400 animate-pulse-urgent" />
+            <span className="uppercase">
+              Ofertas com até 70% OFF
             </span>
-            <span className="hidden sm:inline text-gray-400">|</span>
-            <span className="hidden sm:inline text-gray-300">
-              Ofertas atualizadas diariamente
+            <span className="text-gray-500 hidden sm:inline">|</span>
+            <span className="hidden sm:inline text-gray-400 font-normal">
+              Atualizado diariamente
             </span>
+            <ShieldCheck size={11} className="text-green-400 hidden sm:inline" />
           </div>
         </div>
 
         {/* Main header */}
-        <div className="bg-gradient-to-r from-orange-500 to-orange-600">
-          <div className="site-container py-3 flex items-center gap-3 sm:gap-5">
-            {/* Mobile menu */}
+        <div className="bg-orange-500">
+          <div className="site-container py-2.5 flex items-center gap-3 sm:gap-4">
+            {/* Mobile menu toggle */}
             <button
               onClick={() => setMenuOpen(!menuOpen)}
-              className="lg:hidden text-white/90 hover:text-white transition-colors"
+              className="lg:hidden text-white/90 hover:text-white"
               aria-label="Menu"
             >
-              {menuOpen ? <X size={24} /> : <Menu size={24} />}
+              {menuOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
 
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-2.5 shrink-0">
-              <div className="w-9 h-9 sm:w-10 sm:h-10 bg-white rounded-xl flex items-center justify-center shadow-sm">
-                <span className="text-gradient font-black text-lg sm:text-xl">A</span>
+            <Link href="/" className="flex items-center gap-2 shrink-0">
+              <div className="w-8 h-8 sm:w-9 sm:h-9 bg-white flex items-center justify-center">
+                <span className="text-gradient font-black text-base sm:text-lg">A</span>
               </div>
               <div className="hidden sm:block">
-                <h1 className="text-lg font-bold text-white leading-tight">
+                <h1 className="text-sm font-bold text-white leading-none">
                   Achados da Jeh
                 </h1>
-                <p className="text-[10px] text-orange-100 -mt-0.5 tracking-wide">
-                  OS MELHORES ACHADOS DA INTERNET
+                <p className="text-[9px] text-orange-200 tracking-widest uppercase mt-0.5">
+                  Melhores ofertas
                 </p>
               </div>
             </Link>
 
             {/* Search */}
-            <form onSubmit={handleSearch} className="flex-1 max-w-2xl">
+            <form onSubmit={handleSearch} className="flex-1 max-w-xl">
               <div className="relative">
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Buscar produtos, marcas, categorias..."
-                  className="w-full pl-4 pr-12 py-2.5 sm:py-3 rounded-xl bg-white text-gray-800 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-300 shadow-inner"
+                  placeholder="Buscar produtos, marcas..."
+                  className="w-full pl-3 pr-10 py-2 sm:py-2.5 bg-white text-gray-800 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-300"
                 />
                 <button
                   type="submit"
-                  className="absolute right-1.5 top-1/2 -translate-y-1/2 bg-orange-500 hover:bg-orange-600 text-white p-2 rounded-lg transition-colors"
+                  className="absolute right-0 top-0 h-full px-3 bg-orange-600 hover:bg-orange-700 text-white transition-colors"
                 >
                   <Search size={16} />
                 </button>
@@ -107,36 +108,36 @@ export default function Header() {
             </form>
 
             {/* Desktop actions */}
-            <div className="hidden lg:flex items-center gap-4">
+            <div className="hidden lg:flex items-center gap-3">
               <Link
                 href="/favoritos"
-                className="flex items-center gap-1.5 text-white/90 hover:text-white transition-colors text-sm font-medium"
+                className="flex items-center gap-1.5 text-white/90 hover:text-white transition-colors text-sm"
               >
-                <Heart size={20} />
-                <span className="hidden xl:inline">Favoritos</span>
+                <Heart size={18} />
+                <span>Favoritos</span>
               </Link>
               <Link
                 href="/ofertas"
-                className="flex items-center gap-1.5 bg-white/15 hover:bg-white/25 text-white px-4 py-2 rounded-xl text-sm font-semibold transition-colors"
+                className="flex items-center gap-1.5 bg-white/15 hover:bg-white/25 text-white px-3.5 py-1.5 text-sm font-semibold transition-colors"
               >
-                <Tag size={16} />
+                <Tag size={14} />
                 Ofertas
               </Link>
             </div>
           </div>
         </div>
 
-        {/* Category navigation — desktop */}
-        <nav className="hidden lg:block bg-white border-b border-gray-100">
+        {/* Category nav — desktop */}
+        <nav className="hidden lg:block bg-white border-b border-gray-200">
           <div className="site-container">
-            <ul className="flex items-center gap-0.5 -mb-px">
+            <ul className="flex items-center">
               <li>
                 <Link
                   href="/"
-                  className={`inline-flex items-center px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
+                  className={`inline-flex items-center px-4 py-2.5 text-sm font-medium border-b-2 transition-colors ${
                     pathname === "/"
                       ? "border-orange-500 text-orange-600"
-                      : "border-transparent text-gray-600 hover:text-orange-600 hover:border-orange-200"
+                      : "border-transparent text-gray-600 hover:text-orange-600 hover:border-orange-300"
                   }`}
                 >
                   Início
@@ -146,10 +147,10 @@ export default function Header() {
                 <li key={cat.slug}>
                   <Link
                     href={`/categoria/${cat.slug}`}
-                    className={`inline-flex items-center px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
+                    className={`inline-flex items-center px-4 py-2.5 text-sm font-medium border-b-2 transition-colors ${
                       pathname === `/categoria/${cat.slug}`
                         ? "border-orange-500 text-orange-600"
-                        : "border-transparent text-gray-600 hover:text-orange-600 hover:border-orange-200"
+                        : "border-transparent text-gray-600 hover:text-orange-600 hover:border-orange-300"
                     }`}
                   >
                     {cat.name}
@@ -159,9 +160,9 @@ export default function Header() {
               <li className="ml-auto">
                 <Link
                   href="/ofertas"
-                  className="inline-flex items-center gap-1.5 px-4 py-3 text-sm font-semibold text-red-500 hover:text-red-600 border-b-2 border-transparent hover:border-red-500 transition-colors"
+                  className="inline-flex items-center gap-1.5 px-4 py-2.5 text-sm font-bold text-red-600 hover:text-red-700 border-b-2 border-transparent hover:border-red-500 transition-colors"
                 >
-                  <Flame size={15} />
+                  <Zap size={13} />
                   Ofertas do Dia
                 </Link>
               </li>
@@ -169,39 +170,35 @@ export default function Header() {
           </div>
         </nav>
 
-        {/* Mobile menu overlay */}
+        {/* Mobile menu */}
         {menuOpen && (
           <div className="fixed inset-0 z-40 lg:hidden" onClick={() => setMenuOpen(false)}>
             <div className="absolute inset-0 bg-black/50 animate-fade-in" />
             <div
-              className="absolute left-0 top-0 bottom-0 w-80 max-w-[85vw] bg-white shadow-2xl animate-slide-down overflow-y-auto"
+              className="absolute left-0 top-0 bottom-0 w-72 max-w-[80vw] bg-white shadow-2xl animate-slide-down overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Menu header */}
-              <div className="bg-gradient-to-r from-orange-500 to-pink-500 p-6 text-white">
-                <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-lg font-bold">Menu</h2>
+              <div className="bg-orange-500 p-5 text-white">
+                <div className="flex items-center justify-between mb-2">
+                  <h2 className="text-base font-bold">Menu</h2>
                   <button onClick={() => setMenuOpen(false)} aria-label="Fechar">
-                    <X size={22} />
+                    <X size={20} />
                   </button>
                 </div>
-                <p className="text-orange-100 text-sm">
-                  Encontre os melhores achados
-                </p>
+                <p className="text-orange-200 text-xs">Os melhores achados</p>
               </div>
 
-              {/* Menu links */}
-              <div className="py-2">
+              <div className="py-1">
                 <Link
                   href="/"
-                  className="flex items-center justify-between px-6 py-3.5 text-gray-700 hover:bg-orange-50 hover:text-orange-600 font-medium transition-colors"
+                  className="flex items-center justify-between px-5 py-3 text-gray-700 hover:bg-gray-50 font-medium text-sm"
                 >
                   Início
-                  <ChevronRight size={16} className="text-gray-300" />
+                  <ChevronRight size={14} className="text-gray-300" />
                 </Link>
 
-                <div className="px-6 py-2">
-                  <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                <div className="px-5 py-2">
+                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">
                     Categorias
                   </p>
                 </div>
@@ -210,27 +207,27 @@ export default function Header() {
                   <Link
                     key={cat.slug}
                     href={`/categoria/${cat.slug}`}
-                    className="flex items-center justify-between px-6 py-3 text-gray-600 hover:bg-orange-50 hover:text-orange-600 transition-colors"
+                    className="flex items-center justify-between px-5 py-2.5 text-gray-600 hover:bg-gray-50 text-sm"
                   >
                     {cat.name}
-                    <ChevronRight size={16} className="text-gray-300" />
+                    <ChevronRight size={14} className="text-gray-300" />
                   </Link>
                 ))}
 
-                <div className="border-t border-gray-100 mt-2 pt-2">
+                <div className="border-t border-gray-100 mt-2 pt-1">
                   <Link
                     href="/ofertas"
-                    className="flex items-center gap-2 px-6 py-3.5 text-red-500 font-semibold hover:bg-red-50 transition-colors"
+                    className="flex items-center gap-2 px-5 py-3 text-red-600 font-semibold text-sm hover:bg-red-50"
                   >
-                    <Flame size={18} />
+                    <Zap size={16} />
                     Ofertas do Dia
                   </Link>
                   <Link
                     href="/favoritos"
-                    className="flex items-center gap-2 px-6 py-3.5 text-gray-600 hover:bg-orange-50 hover:text-orange-600 transition-colors"
+                    className="flex items-center gap-2 px-5 py-3 text-gray-600 hover:bg-gray-50 text-sm"
                   >
-                    <Heart size={18} />
-                    Meus Favoritos
+                    <Heart size={16} />
+                    Favoritos
                   </Link>
                 </div>
               </div>
