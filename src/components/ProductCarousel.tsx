@@ -53,8 +53,8 @@ function CarouselCard({ product }: { product: Product }) {
           sizes="200px"
         />
         {discount > 0 && (
-          <div className="absolute top-2 left-2 bg-[#DC3545] text-white text-[9px] font-bold px-1.5 py-0.5 rounded-md flex items-center gap-0.5">
-            <TrendingDown size={8} />
+          <div className="absolute top-2 left-2 bg-[#DC3545] text-white text-[10px] font-bold px-1.5 py-0.5 rounded-md flex items-center gap-0.5">
+            <TrendingDown size={9} />
             -{discount}%
           </div>
         )}
@@ -63,21 +63,21 @@ function CarouselCard({ product }: { product: Product }) {
       {/* Info */}
       <div className="p-3 flex flex-col flex-1">
         <span
-          className="self-start text-[8px] font-semibold px-1.5 py-0.5 rounded text-white mb-1.5"
-          style={{ backgroundColor: platformInfo.color }}
+          className="self-start text-[10px] font-semibold px-1.5 py-0.5 rounded mb-1.5"
+          style={{ backgroundColor: platformInfo.color, color: platformInfo.textColor }}
         >
           {platformInfo.shortName}
         </span>
 
         <Link href={`/produto/${product.slug}`}>
-          <h3 className="font-heading text-[11px] font-semibold text-[#212529] line-clamp-2 hover:text-[#FF5733] transition-colors leading-snug mb-2">
+          <h3 className="font-heading text-xs font-semibold text-[#212529] line-clamp-2 hover:text-[#FF5733] transition-colors leading-snug mb-2">
             {product.title}
           </h3>
         </Link>
 
         <div className="mt-auto">
           {product.originalPrice && product.originalPrice > product.price && (
-            <p className="text-[9px] text-gray-400 line-through">
+            <p className="text-[10px] text-gray-400 line-through">
               {formatPrice(product.originalPrice)}
             </p>
           )}
@@ -92,8 +92,8 @@ function CarouselCard({ product }: { product: Product }) {
             onClick={() => {
               fetch(`/api/products/${product.id}/click`, { method: "POST" });
             }}
-            className="mt-2 w-full flex items-center justify-center gap-1 py-2 rounded-lg text-white text-[10px] font-semibold transition-all hover:opacity-90"
-            style={{ backgroundColor: platformInfo.color }}
+            className="mt-2 w-full flex items-center justify-center gap-1 py-2 rounded-lg text-[11px] font-semibold transition-all hover:opacity-90"
+            style={{ backgroundColor: platformInfo.color, color: platformInfo.textColor }}
           >
             <ExternalLink size={10} />
             Ver oferta

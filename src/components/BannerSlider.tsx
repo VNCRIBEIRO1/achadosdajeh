@@ -73,7 +73,7 @@ export default function BannerSlider({ banners }: BannerSliderProps) {
             >
               <div className={`w-full h-full bg-gradient-to-br ${slide.gradient} flex items-center`}>
                 <div className="relative z-10 site-container">
-                  <p className="text-white/50 text-[10px] sm:text-xs font-semibold uppercase tracking-[0.15em] mb-3">
+                  <p className="text-white/50 text-xs font-semibold uppercase tracking-[0.15em] mb-3">
                     Achados da Jeh
                   </p>
                   <h2 className="font-heading text-white text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 leading-tight max-w-lg">

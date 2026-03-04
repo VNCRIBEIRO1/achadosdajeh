@@ -110,7 +110,7 @@ export default async function Home() {
                 <div key={badge.title} className="flex items-start gap-3">
                   <div
                     className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
-                    style={{ backgroundColor: `${badge.color}12`, color: badge.color }}
+                    style={{ backgroundColor: `${badge.color}1A`, color: badge.color }}
                   >
                     <badge.Icon size={20} />
                   </div>

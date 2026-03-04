@@ -36,7 +36,7 @@ export default function BottomBar() {
               }`}
             >
               <Icon size={20} strokeWidth={isActive ? 2.2 : 1.6} />
-              <span className={`text-[10px] ${isActive ? "font-bold" : "font-medium"}`}>
+              <span className={`text-[11px] ${isActive ? "font-bold" : "font-medium"}`}>
                 {item.label}
               </span>
             </Link>

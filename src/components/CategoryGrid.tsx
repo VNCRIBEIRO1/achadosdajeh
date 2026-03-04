@@ -94,11 +94,11 @@ export default function CategoryGrid({ categories }: CategoryGridProps) {
             >
               <div
                 className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center transition-all group-hover:scale-110 group-hover:shadow-md"
-                style={{ backgroundColor: `${color}12`, color }}
+                style={{ backgroundColor: `${color}1A`, color }}
               >
                 <IconComponent size={22} />
               </div>
-              <span className="text-[10px] sm:text-[11px] font-semibold text-gray-600 group-hover:text-[#212529] text-center leading-tight transition-colors">
+              <span className="text-[11px] sm:text-xs font-semibold text-gray-600 group-hover:text-[#212529] text-center leading-tight transition-colors">
                 {cat.name}
               </span>
             </Link>

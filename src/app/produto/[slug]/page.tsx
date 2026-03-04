@@ -126,8 +126,8 @@ export default async function ProductPage({ params }: Props) {
             <div>
               {/* Platform */}
               <span
-                className="inline-block text-[10px] font-semibold px-2.5 py-1 rounded-md text-white mb-3"
-                style={{ backgroundColor: platformInfo.color }}
+                className="inline-block text-[11px] font-semibold px-2.5 py-1 rounded-md mb-3"
+                style={{ backgroundColor: platformInfo.color, color: platformInfo.textColor }}
               >
                 {platformInfo.name}
               </span>
@@ -159,8 +159,8 @@ export default async function ProductPage({ params }: Props) {
                 href={product.affiliateLink}
                 target="_blank"
                 rel="noopener noreferrer nofollow"
-                className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl text-white font-heading font-semibold text-base transition-all hover:opacity-90 active:scale-[0.99] mb-4"
-                style={{ backgroundColor: platformInfo.color }}
+                className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl font-heading font-semibold text-base transition-all hover:opacity-90 active:scale-[0.99] mb-4"
+                style={{ backgroundColor: platformInfo.color, color: platformInfo.textColor }}
               >
                 <ExternalLink size={16} />
                 Ver na {platformInfo.name}
@@ -191,7 +191,7 @@ export default async function ProductPage({ params }: Props) {
               )}
 
               {/* Disclaimer */}
-              <p className="text-[10px] text-gray-400 mt-4 leading-relaxed">
+              <p className="text-[11px] text-gray-400 mt-4 leading-relaxed">
                 * Preço e disponibilidade sujeitos a alteração. Verifique no site da loja.
                 Este site contém links de afiliados.
               </p>

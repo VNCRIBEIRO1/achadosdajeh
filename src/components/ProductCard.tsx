@@ -54,8 +54,8 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
 
         {/* Discount badge */}
         {discount > 0 && (
-          <div className="absolute top-2.5 left-2.5 bg-[#DC3545] text-white text-[10px] font-bold px-2 py-0.5 rounded-md flex items-center gap-0.5">
-            <TrendingDown size={9} />
+          <div className="absolute top-2.5 left-2.5 bg-[#DC3545] text-white text-[11px] font-bold px-2 py-0.5 rounded-md flex items-center gap-0.5">
+            <TrendingDown size={10} />
             -{discount}%
           </div>
         )}
@@ -65,14 +65,14 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
       <div className="p-3.5 sm:p-4 flex flex-col flex-1">
         {/* Platform tag */}
         <span
-          className="self-start text-[9px] font-semibold px-2 py-0.5 rounded text-white mb-2"
-          style={{ backgroundColor: platformInfo.color }}
+          className="self-start text-[11px] font-semibold px-2 py-0.5 rounded mb-2"
+          style={{ backgroundColor: platformInfo.color, color: platformInfo.textColor }}
         >
           {platformInfo.shortName}
         </span>
 
         <Link href={`/produto/${product.slug}`}>
-          <h3 className="font-heading text-[12px] sm:text-[13px] font-semibold text-[#212529] line-clamp-2 hover:text-[#FF5733] transition-colors leading-snug mb-3">
+          <h3 className="font-heading text-[13px] sm:text-sm font-semibold text-[#212529] line-clamp-2 hover:text-[#FF5733] transition-colors leading-snug mb-3">
             {product.title}
           </h3>
         </Link>
@@ -88,7 +88,7 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
             {formatPrice(product.price)}
           </p>
           {discount > 0 && product.originalPrice && (
-            <p className="text-[10px] font-semibold text-[#198754] mt-1">
+            <p className="text-[11px] font-semibold text-[#198754] mt-1">
               Economize{" "}
               {formatPrice(product.originalPrice - product.price)}
             </p>
@@ -102,8 +102,8 @@ export default function ProductCard({ product, index = 0 }: ProductCardProps) {
             onClick={() => {
               fetch(`/api/products/${product.id}/click`, { method: "POST" });
             }}
-            className="mt-3 w-full flex items-center justify-center gap-1.5 py-2.5 rounded-lg text-white text-xs font-semibold transition-all hover:opacity-90 active:scale-[0.98]"
-            style={{ backgroundColor: platformInfo.color }}
+            className="mt-3 w-full flex items-center justify-center gap-1.5 py-2.5 rounded-lg text-xs font-semibold transition-all hover:opacity-90 active:scale-[0.98]"
+            style={{ backgroundColor: platformInfo.color, color: platformInfo.textColor }}
           >
             <ExternalLink size={12} />
             Ver na {platformInfo.name}

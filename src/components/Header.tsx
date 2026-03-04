@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { Search, Menu, X, Heart, ChevronDown } from "lucide-react";
+import { Search, Menu, X, Heart } from "lucide-react";
 import { useRouter, usePathname } from "next/navigation";
 
 const categories = [
@@ -81,7 +81,7 @@ export default function Header() {
               <h1 className="font-heading text-sm sm:text-base font-bold text-[#212529] leading-none">
                 Achados da Jeh
               </h1>
-              <p className="text-[10px] text-gray-400 font-medium mt-0.5 hidden sm:block">
+              <p className="text-xs text-gray-400 font-medium mt-0.5 hidden sm:block">
                 Curadoria de ofertas
               </p>
             </div>
@@ -96,7 +96,7 @@ export default function Header() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Buscar produtos..."
-                className="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-700 placeholder:text-gray-400 focus:outline-none focus:border-[#FF5733] focus:bg-white focus:ring-1 focus:ring-[#FF5733]/20 transition-all"
+                className="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm text-gray-700 placeholder:text-gray-400 focus:outline-none focus:border-[#FF5733] focus:bg-white focus:ring-2 focus:ring-[#FF5733]/10 transition-all"
               />
             </div>
           </form>
@@ -191,7 +191,7 @@ export default function Header() {
               </Link>
 
               <div className="px-5 pt-4 pb-2">
-                <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">
+                <p className="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">
                   Categorias
                 </p>
               </div>
