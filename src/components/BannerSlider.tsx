@@ -62,8 +62,8 @@ export default function BannerSlider({ banners }: BannerSliderProps) {
 
   if (!hasRealBanners) {
     return (
-      <div className="relative w-full rounded-2xl overflow-hidden">
-        <div className="relative h-[180px] sm:h-[280px] md:h-[380px]">
+      <div className="relative w-full rounded-3xl overflow-hidden shadow-xl">
+        <div className="relative h-[200px] sm:h-[300px] md:h-[400px]">
           {defaultSlides.map((slide, index) => (
             <div
               key={slide.id}
@@ -75,11 +75,13 @@ export default function BannerSlider({ banners }: BannerSliderProps) {
             >
               <div className={`w-full h-full bg-gradient-to-br ${slide.gradient} flex items-center`}>
                 <div className="absolute inset-0 opacity-10">
-                  <div className="absolute top-10 right-10 w-64 h-64 bg-white rounded-full blur-3xl" />
-                  <div className="absolute bottom-5 left-20 w-40 h-40 bg-white rounded-full blur-2xl" />
+                  <div className="absolute top-10 right-10 w-80 h-80 bg-white rounded-full blur-3xl" />
+                  <div className="absolute bottom-5 left-20 w-52 h-52 bg-white rounded-full blur-2xl" />
+                  <div className="absolute top-1/2 right-1/3 w-32 h-32 bg-white rounded-full blur-xl" />
                 </div>
                 <div className="relative z-10 px-8 sm:px-14 max-w-2xl">
-                  <h2 className="text-white text-2xl sm:text-4xl lg:text-5xl font-bold mb-3 leading-tight">
+                  <p className="text-white/70 text-xs sm:text-sm font-semibold uppercase tracking-wider mb-2">Achados da Jeh</p>
+                  <h2 className="text-white text-2xl sm:text-4xl lg:text-5xl font-extrabold mb-3 leading-tight">
                     {slide.title}
                   </h2>
                   <p className="text-white/80 text-sm sm:text-lg mb-6 max-w-md">
@@ -87,7 +89,7 @@ export default function BannerSlider({ banners }: BannerSliderProps) {
                   </p>
                   <Link
                     href={slide.link}
-                    className="inline-flex items-center gap-2 px-6 py-3 bg-white text-gray-900 rounded-full font-semibold text-sm sm:text-base hover:bg-gray-100 transition-colors shadow-lg"
+                    className="inline-flex items-center gap-2 px-7 py-3.5 bg-white text-gray-900 rounded-xl font-bold text-sm sm:text-base hover:bg-gray-50 transition-all shadow-lg hover:shadow-xl hover:scale-105"
                   >
                     {slide.cta}
                     <ArrowRight size={16} />

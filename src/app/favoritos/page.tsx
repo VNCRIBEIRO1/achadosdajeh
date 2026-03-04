@@ -2,31 +2,42 @@
 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Link from "next/link";
+import { Heart, ChevronRight, ArrowRight } from "lucide-react";
 
 export default function FavoritesPage() {
   return (
     <>
       <Header />
-      <main className="max-w-7xl mx-auto px-4 py-6">
-        <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-4">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+        {/* Breadcrumb */}
+        <nav className="flex items-center gap-1.5 text-sm text-gray-400 mb-6">
+          <Link href="/" className="hover:text-orange-500 transition-colors">Início</Link>
+          <ChevronRight size={14} />
+          <span className="text-gray-700 font-medium">Favoritos</span>
+        </nav>
+
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-6">
           Meus Favoritos
         </h1>
-        <div className="bg-white rounded-2xl p-8 text-center shadow-sm border border-gray-100">
-          <div className="w-12 h-12 mx-auto mb-3 rounded-full bg-pink-50 flex items-center justify-center">
-            <svg className="w-6 h-6 text-pink-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+
+        <div className="bg-white rounded-3xl p-10 sm:p-16 text-center shadow-sm border border-gray-100">
+          <div className="w-20 h-20 mx-auto mb-5 rounded-3xl bg-gradient-to-br from-pink-50 to-red-50 flex items-center justify-center">
+            <Heart className="text-pink-400" size={32} />
           </div>
-          <p className="text-gray-500 font-medium">
-            Você ainda não tem favoritos
+          <h2 className="text-lg font-bold text-gray-900 mb-1">
+            Nenhum favorito ainda
+          </h2>
+          <p className="text-sm text-gray-400 max-w-sm mx-auto">
+            Navegue pelos produtos e toque no coração para salvar os seus preferidos!
           </p>
-          <p className="text-sm text-gray-400 mt-1">
-            Navegue pelos produtos e salve os seus preferidos!
-          </p>
-          <a
-            href="/"
-            className="inline-block mt-4 px-6 py-2.5 bg-orange-500 text-white rounded-full font-semibold hover:bg-orange-600 transition-colors"
+          <Link
+            href="/ofertas"
+            className="inline-flex items-center gap-2 mt-6 px-7 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-xl font-bold text-sm hover:shadow-lg transition-all hover:scale-105"
           >
-            Explorar Produtos
-          </a>
+            Explorar Ofertas
+            <ArrowRight size={16} />
+          </Link>
         </div>
       </main>
       <Footer />

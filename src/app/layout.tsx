@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
+import BottomBar from "@/components/BottomBar";
+import CanvasBackground from "@/components/CanvasBackground";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -45,8 +47,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-BR">
-      <body className={`${poppins.variable} font-sans antialiased bg-gray-50 text-gray-900`}>
-        {children}
+      <body className={`${poppins.variable} font-sans antialiased bg-[#F5F5F7] text-gray-900`}>
+        <CanvasBackground />
+        <div className="relative z-10 pb-bottom-bar">
+          {children}
+        </div>
+        <BottomBar />
       </body>
     </html>
   );
