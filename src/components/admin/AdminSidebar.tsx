@@ -12,6 +12,7 @@ import {
   ShoppingBag,
   Menu,
   X,
+  LayoutList,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -20,6 +21,7 @@ const menuItems = [
   { href: "/admin/dashboard/produtos", icon: Package, label: "Produtos" },
   { href: "/admin/dashboard/categorias", icon: FolderOpen, label: "Categorias" },
   { href: "/admin/dashboard/banners", icon: Image, label: "Banners" },
+  { href: "/admin/dashboard/secoes", icon: LayoutList, label: "Seções da Home" },
   { href: "/admin/dashboard/config", icon: Settings, label: "Configurações" },
 ];
 

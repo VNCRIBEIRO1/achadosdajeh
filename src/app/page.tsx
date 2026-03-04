@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import BannerSlider from "@/components/BannerSlider";
 import CategoryGrid from "@/components/CategoryGrid";
+import ProductCarousel from "@/components/ProductCarousel";
 import ProductGrid from "@/components/ProductGrid";
 import { prisma } from "@/lib/db";
 import { ShieldCheck, BadgeDollarSign, Store, RefreshCw, ArrowRight, Sparkles, Zap } from "lucide-react";
@@ -24,7 +25,7 @@ async function getData() {
         prisma.product.findMany({
           where: { active: true, featured: true },
           orderBy: { createdAt: "desc" },
-          take: 8,
+          take: 12,
         }),
         prisma.product.findMany({
           where: { active: true },
@@ -51,37 +52,36 @@ export default async function Home() {
           <BannerSlider banners={banners} />
         </section>
 
-        {/* Categories */}
-        <section className="mt-8 sm:mt-10 site-container">
-          <div className="flex items-center justify-between mb-5">
-            <h2 className="text-lg sm:text-xl font-bold text-gray-900 section-title">
-              Navegue por categorias
-            </h2>
-            <Link
-              href="/ofertas"
-              className="text-sm font-medium text-orange-500 hover:text-orange-600 flex items-center gap-1 transition-colors"
-            >
-              Ver todas <ArrowRight size={14} />
-            </Link>
-          </div>
+        {/* Categories — circular icons like Magalu */}
+        <section className="mt-6 sm:mt-8 site-container">
           <CategoryGrid categories={categories} />
         </section>
 
-        {/* Featured Products */}
-        <section className="mt-10 sm:mt-14 site-container">
-          <ProductGrid
+        {/* Destaques — bordered carousel card */}
+        <section className="mt-6 sm:mt-8 site-container">
+          <ProductCarousel
             products={featuredProducts}
             title="Destaques da Jeh"
-            subtitle="Produtos selecionados especialmente pra você"
-            showViewAll
+            titleColor="bg-gradient-to-r from-orange-500 to-orange-600"
+            borderColor="border-orange-200"
+            viewAllLink="/ofertas"
+          />
+        </section>
+
+        {/* Ofertas que você vai amar — bordered carousel card */}
+        <section className="mt-5 sm:mt-6 site-container">
+          <ProductCarousel
+            products={recentProducts}
+            title="Ofertas que você vai amar"
+            titleColor="bg-gradient-to-r from-pink-500 to-rose-500"
+            borderColor="border-pink-200"
             viewAllLink="/ofertas"
           />
         </section>
 
         {/* CTA Banner */}
-        <section className="mt-10 sm:mt-14 site-container">
-          <div className="relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-3xl p-8 sm:p-12 lg:p-16">
-            {/* Decorative elements */}
+        <section className="mt-8 sm:mt-10 site-container">
+          <div className="relative overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-2xl p-8 sm:p-12 lg:p-14">
             <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-orange-500/20 to-transparent rounded-full blur-3xl" />
             <div className="absolute bottom-0 left-0 w-72 h-72 bg-gradient-to-tr from-pink-500/15 to-transparent rounded-full blur-3xl" />
 
@@ -106,32 +106,32 @@ export default async function Home() {
                 </a>
               </div>
               <div className="shrink-0 hidden md:block">
-                <div className="w-48 h-48 bg-gradient-to-br from-orange-500/30 to-pink-500/30 rounded-full flex items-center justify-center animate-float">
-                  <Sparkles className="text-orange-400" size={64} />
+                <div className="w-40 h-40 bg-gradient-to-br from-orange-500/30 to-pink-500/30 rounded-full flex items-center justify-center animate-float">
+                  <Sparkles className="text-orange-400" size={56} />
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Recent Products */}
-        <section className="mt-10 sm:mt-14 site-container">
+        {/* Grid Products section */}
+        <section className="mt-8 sm:mt-10 site-container">
           <ProductGrid
             products={recentProducts}
-            title="Acabou de Chegar"
-            subtitle="Os achados mais recentes"
+            title="Todos os Achados"
+            subtitle="Veja todos os produtos disponíveis"
             showViewAll
             viewAllLink="/ofertas"
           />
         </section>
 
         {/* Trust Section */}
-        <section className="mt-10 sm:mt-14 mb-10 site-container">
-          <div className="bg-white rounded-3xl border border-gray-100 p-6 sm:p-10">
-            <h2 className="text-center text-lg sm:text-xl font-bold text-gray-900 mb-8">
+        <section className="mt-8 sm:mt-10 mb-8 site-container">
+          <div className="bg-white rounded-2xl border border-gray-100 p-6 sm:p-8">
+            <h2 className="text-center text-base sm:text-lg font-bold text-gray-900 mb-6">
               Por que escolher a Achados da Jeh?
             </h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
               {[
                 { Icon: ShieldCheck, title: "Links Seguros", desc: "Direcionamos para lojas oficiais", gradient: "from-green-500 to-emerald-600" },
                 { Icon: BadgeDollarSign, title: "Melhores Preços", desc: "Curadoria dos menores valores", gradient: "from-orange-500 to-amber-500" },
@@ -139,13 +139,13 @@ export default async function Home() {
                 { Icon: RefreshCw, title: "Atualizado", desc: "Novos achados todos os dias", gradient: "from-purple-500 to-violet-600" },
               ].map((badge) => (
                 <div key={badge.title} className="text-center group">
-                  <div className={`inline-flex p-3.5 rounded-2xl bg-gradient-to-br ${badge.gradient} mb-3 shadow-lg shadow-gray-200 group-hover:scale-110 transition-transform`}>
-                    <badge.Icon className="text-white" size={24} />
+                  <div className={`inline-flex p-3 rounded-xl bg-gradient-to-br ${badge.gradient} mb-2.5 group-hover:scale-110 transition-transform`}>
+                    <badge.Icon className="text-white" size={20} />
                   </div>
-                  <h3 className="font-semibold text-gray-900 text-sm sm:text-base">
+                  <h3 className="font-semibold text-gray-900 text-sm">
                     {badge.title}
                   </h3>
-                  <p className="text-xs text-gray-500 mt-1 leading-relaxed">{badge.desc}</p>
+                  <p className="text-[11px] text-gray-500 mt-0.5 leading-relaxed">{badge.desc}</p>
                 </div>
               ))}
             </div>
